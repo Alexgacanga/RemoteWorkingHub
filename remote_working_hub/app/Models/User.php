@@ -29,4 +29,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    function payments(){
+        return $this->hasMany(Payment::class);
+    }
+    function packages(){
+        return $this->hasMany(Package::class);
+    }
 }
