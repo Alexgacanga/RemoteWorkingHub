@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
-            $table->longText('description');
-            $table->decimal('price', $total = 8, $places=2);
-            $table->enum('payment_options', ['day', 'week', 'month']);
-            $table->foreignId('package_detail_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('packages');
+        Schema::dropIfExists('roles');
     }
 };
