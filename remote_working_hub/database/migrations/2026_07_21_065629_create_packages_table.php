@@ -18,6 +18,8 @@ return new class extends Migration
             $table->longText('description');
             $table->decimal('price', $total = 8, $places=2);
             $table->enum('payment_options', ['day', 'week', 'month']);
+            $table->foreignId('package_id')->constrained()->cascadeOnDelete();
+
         });
     }
 

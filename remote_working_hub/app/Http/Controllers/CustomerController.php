@@ -2,33 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $payment = Payment::all();
-        return view('admin.payments', compact('payment'));
-    }
-    public function recordCash()
-    {
-
-        return view('payments.record-cash');
-    }
-    public function mpesaPrompt()
-    {
-
-        return view('payments.mpesa-prompt');
-    }
-    public function mpesaCode()
-    {
-
-        return view('payments.mpesa-code');
+        $customer = Customer::all();
+        return view('admin.customers', compact('customer'));
     }
 
     /**

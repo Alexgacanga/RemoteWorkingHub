@@ -2,9 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('sidebarToggle');
     const logoFull = document.getElementById('logoFull');
-    const logoShort = document.getElementById('logoShort');
     const navTexts = document.querySelectorAll('.nav-text');
     const navItems = document.querySelectorAll('.nav-item');
+    const navIcons = document.querySelectorAll('.nav-icon');
+    const sectionTitles = document.querySelectorAll('.nav-section-title');
 
     // 1. Read the saved state from localStorage
     let isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
@@ -18,17 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
             logoFull.classList.remove('opacity-100', 'scale-100');
             logoFull.classList.add('opacity-0', 'scale-50');
 
-            logoShort.classList.remove('opacity-0', 'scale-50');
-            logoShort.classList.add('opacity-100', 'scale-100');
-
             navTexts.forEach(text => {
-                text.classList.remove('max-w-[200px]', 'opacity-100', 'ml-2');
+                text.classList.remove('max-w-[200px]', 'opacity-100', 'ml-3');
                 text.classList.add('max-w-0', 'opacity-0', 'ml-0');
             });
 
-            navItems.forEach(item => {
-                item.classList.remove('px-4');
-                item.classList.add('px-7');
+            sectionTitles.forEach(title => {
+                title.classList.remove('opacity-100');
+                title.classList.add('opacity-0', 'h-0', 'pt-0', 'pb-0', 'overflow-hidden');
             });
         } else {
             sidebar.classList.remove('w-20');
@@ -37,17 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
             logoFull.classList.remove('opacity-0', 'scale-50');
             logoFull.classList.add('opacity-100', 'scale-100');
 
-            logoShort.classList.remove('opacity-100', 'scale-100');
-            logoShort.classList.add('opacity-0', 'scale-50');
-
             navTexts.forEach(text => {
                 text.classList.remove('max-w-0', 'opacity-0', 'ml-0');
-                text.classList.add('max-w-[200px]', 'opacity-100', 'ml-2');
+                text.classList.add('max-w-[200px]', 'opacity-100', 'ml-3');
             });
 
-            navItems.forEach(item => {
-                item.classList.remove('px-7');
-                item.classList.add('px-4');
+            sectionTitles.forEach(title => {
+                title.classList.remove('opacity-0', 'h-0', 'pt-0', 'pb-0', 'overflow-hidden');
+                title.classList.add('opacity-100');
             });
         }
     };
@@ -86,22 +81,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Active State Logic ---
     const applyActiveState = (targetItem) => {
+        // Reset all items to default inactive state
         navItems.forEach(nav => {
-            nav.classList.remove('bg-gray-300', 'text-gray-900');
-            nav.classList.add('text-gray-100', 'hover:bg-gray-700');
+            // Remove active Dashlite-like colors
+            nav.classList.remove('bg-indigo-50', 'text-indigo-600');
+            // Restore default gray hover colors
+            nav.classList.add('text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900');
+
+            // Reset icon colors
+            const icon = nav.querySelector('.nav-icon');
+            if(icon) {
+                icon.classList.remove('text-indigo-600');
+                icon.classList.add('text-gray-400');
+            }
         });
-        targetItem.classList.remove('text-gray-100', 'hover:bg-gray-700');
-        targetItem.classList.add('bg-gray-300', 'text-gray-900');
+
+        // Apply active classes to the target
+        targetItem.classList.remove('text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900');
+        targetItem.classList.add('bg-indigo-50', 'text-indigo-600');
+
+        // Highlight active icon
+        const activeIcon = targetItem.querySelector('.nav-icon');
+        if(activeIcon) {
+            activeIcon.classList.remove('text-gray-400');
+            activeIcon.classList.add('text-indigo-600');
+        }
     };
 
+    // Apply active state on click
     navItems.forEach(item => {
         item.addEventListener('click', function () {
             applyActiveState(this);
         });
     });
 
+    // Persist active state based on the current URL
     const currentUrl = window.location.href;
     navItems.forEach(item => {
+        // Match current page URL
         if (item.href && item.href !== '#' && currentUrl.startsWith(item.href)) {
             applyActiveState(item);
         }
