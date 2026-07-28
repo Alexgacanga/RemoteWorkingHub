@@ -30,13 +30,13 @@ class User extends Authenticatable
         ];
     }
 
-    function payments(){
+    public function payments(){
         return $this->hasMany(Payment::class);
     }
-    function packages(){
+    public function packages(){
         return $this->hasMany(Package::class);
     }
-    function roles(){
+    public function roles(){
         return $this->belongsToMany(Role::class);
     }
 }

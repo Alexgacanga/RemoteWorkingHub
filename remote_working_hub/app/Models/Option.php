@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Option extends Model
 {
-    function packages(){
+    public function packages(){
         return $this->hasMany(Package::class);
     }
 }
