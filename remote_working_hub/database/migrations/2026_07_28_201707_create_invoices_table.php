@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('subscription_id')->constrained()->cascadeOnDelete();
+            $table->string('invoice_number')->unique();
+            $table->decimal('total_amount', $total = 8, $places = 2);
+            $table->decimal('paid_amount', $total = 8, $places = 2);
+            $table->decimal('balance_amount', $total = 8, $places = 2);
+            $table->date('due_date');
+            $table->enum('status', ['pending', 'paid', 'partially_paid', 'overdue', 'cancelled'])->default('pending');
         });
     }
 

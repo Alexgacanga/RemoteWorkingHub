@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->longText('description');
+            $table->text('description');
             $table->decimal('price', $total = 8, $places=2);
             $table->enum('payment_options', ['day', 'week', 'month']);
-            $table->foreignId('package_id')->constrained()->cascadeOnDelete();
-
+            $table->boolean('is_active')->default(true);
+            $table->integer('duration')->unsigned();
         });
     }
 

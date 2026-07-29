@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('package_id')->constrained()->cascadeOnDelete();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->enum('status', ['pending', 'active', 'expired', 'cancelled'])->default('pending');
         });
     }
 

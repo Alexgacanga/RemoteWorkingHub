@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('invoice_id')->constrained()->cascadeOnDelete();
+            $table->enum('payment_method', ['cash', 'mpesa']);
+            $table->foreignId('received_by')->constrained('users')->nullable()->nullOnDelete();
+            $table->string('transaction_reference')->nullable();
+            $table->dateTime('payment_date')->nullable();
+            $table->decimal('amount', $total = 8, $places = 2);
         });
     }
 
