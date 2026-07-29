@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Package extends Model
 {
+    protected $fillable = [
+    'name',
+    'description',
+    'price',
+    'time_options',
+    'is_active',
+    'options'
+];
+    protected $casts = [
+        'is_active' => 'boolean',
+        'price' => 'decimal:2'
+    ];
+
     public function option(){
         return $this->belongsTo(Option::class);
     }

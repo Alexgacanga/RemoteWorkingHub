@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('price', $total = 8, $places=2);
-            $table->enum('payment_options', ['day', 'week', 'month']);
+            $table->enum('time_options', ['day', 'week', 'month']);
             $table->boolean('is_active')->default(true);
-            $table->integer('duration')->unsigned();
+            $table->foreignId('package_options')->constrained('options')->cascadeOnDelete();
         });
     }
 

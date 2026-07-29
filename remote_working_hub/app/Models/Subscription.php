@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
-{
+{   // FILLABLES TO BE ADDED LATER
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
