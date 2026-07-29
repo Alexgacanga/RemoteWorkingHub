@@ -9,9 +9,6 @@ class Package extends Model
     public function option(){
         return $this->belongsTo(Option::class);
     }
-    public function users(){
-        return $this->belongsToMany(User::class);
-    }
     public function package_details(){
         return $this->hasMany(Package_detail::class);
     }
