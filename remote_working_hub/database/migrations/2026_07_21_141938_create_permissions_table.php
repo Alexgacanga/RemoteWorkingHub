@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -16,6 +17,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('slug')->unique();
         });
+        DB::table('permissions')->insert([
+            //PREDEFINED PERMISSIONS WILL BE ADDED HERE AFTERWARDS
+        ]);
     }
 
     /**
