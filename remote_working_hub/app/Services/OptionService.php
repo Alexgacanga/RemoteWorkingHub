@@ -20,7 +20,7 @@ class OptionService
         ->get();
     }
     public function is_active(): Collection{
-        return Option::is_active()
+        return Option::where('is_active', true)
         ->withCount('packages')
         ->orderBy('name')
         ->get();
@@ -43,9 +43,10 @@ class OptionService
         ]);
     }
     public function delete(Option $option): void{
+        // DENY DELETION IF THERE IS AN ACTIVE PACKAGE ALREADY
         if ($option->packages()->exists()){
             throw ValidationException::withMessages([
-                'option' => 'Cannot delete a service that has packages.'
+                'option' => 'Cannot delete a service that has package(s).'
             ]);
         }
         $option->delete();

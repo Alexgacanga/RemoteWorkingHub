@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Package;
 use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
+use Ramsey\Collection\Collection;
 
 class PackageService
 {
@@ -12,12 +13,12 @@ class PackageService
     {
         //
     }
-    public function all(){
+    public function all(): Collection{
         return Package::with('option')
         ->orderBy('name')
         ->get();
     }
-    public function is_active(){
+    public function is_active(): Collection{
         return Package::where('is_active',true)
         ->with('option')
         ->orderBy('name')
@@ -42,6 +43,7 @@ class PackageService
     }
 
     public function delete(Package $package): void{
+        // CHECK IF THERE ARE ACTIVE SUBSCRIPTIONS ALREADY
         if ($package->subscriptions()->exists()){
             throw ValidationException::withMessages([
                 'package' => 'Package has subscriptions.'
@@ -61,7 +63,7 @@ class PackageService
                 ->copy()
                 ->addDays(30),
             default => throw new \InvalidArgumentException(
-                'Invalid duration time.'
+                'Invalid duration tme.'
             )
         };
     }

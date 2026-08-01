@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Customer;
 use App\Models\Option;
 use App\Models\Package;
 use App\Models\Subscription;
@@ -13,9 +14,37 @@ class SubscriptionService
 {
     public function __construct(
         protected PackageService $packageService,
-        protected OptionService $optionService,
         protected InvoiceService $invoiceService,
     ){}
+    public function all(): Subscription{
+        return Subscription::with('package')
+            ->orderBy(Subscription::with('customer')->customer()->name)
+            ->get();
+    }
+    public function pending(): Subscription{
+        return Subscription::with('package')
+            ->where('status', 'pending')
+            ->orderBy(Subscription::latest())
+            ->get();
+    }
+    public function active(): Subscription{
+        return Subscription::with('package')
+            ->where('status', 'active')
+            ->orderBy(Subscription::latest())
+            ->get();
+    }
+    public function expired(): Subscription{
+        return Subscription::with('package')
+            ->where('status', 'expired')
+            ->orderBy(Subscription::latest())
+            ->get();
+    }
+    public function cancelled(): Subscription{
+        return Subscription::with('package')
+            ->where('status', 'cancelled')
+            ->orderBy(Subscription::latest())
+            ->get();
+    }
     public function createSubscription(array $data): Subscription{
         return DB::transaction(function () use($data){
             $package = Package::with('option')
