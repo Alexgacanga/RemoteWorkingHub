@@ -17,4 +17,10 @@ class Customer extends Model
     public function subscriptions(){
         return $this->hasMany(Subscription::class);
     }
+    public function payments(){
+        return $this->hasMany(Payment::class);
+    }
+    public function receipts(){
+        return $this->hasMany(Receipt::class);
+    }
 }

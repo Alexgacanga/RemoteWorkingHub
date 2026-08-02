@@ -7,6 +7,7 @@ use App\Models\Option;
 use App\Models\Package;
 use App\Models\Subscription;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -16,33 +17,33 @@ class SubscriptionService
         protected PackageService $packageService,
         protected InvoiceService $invoiceService,
     ){}
-    public function all(): Subscription{
+    public function all(): Collection{
         return Subscription::with('package')
             ->orderBy(Subscription::with('customer')->customer()->name)
             ->get();
     }
-    public function pending(): Subscription{
+    public function pending(): Collection{
         return Subscription::with('package')
             ->where('status', 'pending')
-            ->orderBy(Subscription::latest())
+            ->latest()
             ->get();
     }
-    public function active(): Subscription{
+    public function active(): Collection{
         return Subscription::with('package')
             ->where('status', 'active')
-            ->orderBy(Subscription::latest())
+            ->latest()
             ->get();
     }
-    public function expired(): Subscription{
+    public function expired(): Collection{
         return Subscription::with('package')
             ->where('status', 'expired')
-            ->orderBy(Subscription::latest())
+            ->latest()
             ->get();
     }
-    public function cancelled(): Subscription{
+    public function cancelled(): Collection{
         return Subscription::with('package')
             ->where('status', 'cancelled')
-            ->orderBy(Subscription::latest())
+            ->latest()
             ->get();
     }
     public function createSubscription(array $data): Subscription{

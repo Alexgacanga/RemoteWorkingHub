@@ -12,4 +12,7 @@ class Invoice extends Model
     public function payments(){
         return $this->hasMany(Payment::class);
     }
+    public function receipts(){
+        return $this->hasMany(Receipt::class);
+    }
 }
