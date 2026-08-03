@@ -12,6 +12,7 @@ class Customer extends Model
         'email',
         'phone_no',
         'id_no',
+        'payment_id'
     ];
 
     public function subscriptions(){
