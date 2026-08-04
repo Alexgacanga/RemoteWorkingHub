@@ -61,9 +61,9 @@ class PackageService
                 ->addDays(7),
             'month' => $startDate
                 ->copy()
-                ->addDays(30),
+                ->addMonths(1),
             default => throw new \InvalidArgumentException(
-                'Invalid duration tme.'
+                'Invalid duration time.'
             )
         };
     }
