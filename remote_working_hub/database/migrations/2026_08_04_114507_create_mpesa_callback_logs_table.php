@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('mpesa_callback_logs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('transaction_id')->unique();
+            $table->string('bill_reference')->unique();
+            $table->decimal('amount', 12, 2)->nullable();
+            $table->string('phone')->nullable();
+            $table->json('payload');
+            $table->string('status')->default('RECEIVED');
+            $table->timestamps();
+
         });
     }
 

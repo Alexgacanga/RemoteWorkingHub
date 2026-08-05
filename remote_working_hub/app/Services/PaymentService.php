@@ -171,8 +171,6 @@ class PaymentService
                 $receipt = new Receipt();
                 $this->receiptService
                     ->generate($receipt, $payment);
-
-                
             }
         });
     }
