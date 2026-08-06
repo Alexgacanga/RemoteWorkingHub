@@ -37,30 +37,30 @@ class InvoiceService
 
         ]);
     }
-    // public function updateTotals(Invoice $invoice): Invoice{
-    //     $paid = $invoice->payments()->sum('amount');
-    //     $balance = $invoice->total_amount - $paid;
-    //     $invoice->update([
-    //         'paid_amount' => $paid,
-    //         'balance_amount' => $balance,
-    //     ]);
-    //     $this->updateStatus($invoice);
-    //     return $invoice->fresh();
-    // }
+    public function updateTotals(Invoice $invoice): Invoice{
+        $paid = $invoice->payments()->sum('amount');
+        $balance = $invoice->total_amount - $paid;
+        $invoice->update([
+            'paid_amount' => $paid,
+            'balance_amount' => $balance,
+        ]);
+        $this->updateStatus($invoice, $balance);
+        return $invoice->fresh();
+    }
     public function updateStatus(Invoice $invoice, float $newBalance): void{
-        if($invoice->balance_amount == 0){
+        if($newBalance == 0){
             $invoice->update([
                 'status' => 'paid'
             ]);
             return;
         }
-        if($invoice->balance_amount > 0){
+        if($newBalance > 0){
             $invoice->update([
                 'status' => 'partially_paid'
             ]);
             return;
         }
-        if($invoice->balance_amount < 0){
+        if($newBalance < 0){
             $invoice->update([
                 'status' => 'overdue'
             ]);

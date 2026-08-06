@@ -7,9 +7,11 @@ use App\Models\Invoice;
 use App\Models\Package;
 use App\Models\Payment;
 use App\Models\Receipt;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Nette\Schema\ValidationException;
 
 class PaymentService
 {
@@ -122,13 +124,17 @@ class PaymentService
     {
         DB::transaction(function () use ($callback) {
 
+            // MATCHES THE CUSTOMER ID WITH THE BILL REFERENCE
             $customer = Customer::where(
-                'payment_identifier',
+                'payment_id',
                 $callback['bill_reference']
             )->firstOrFail();
-
+            if(! $customer){
+                throw new Exception('Customer not found');
+            }
+            // GETS AMOUNT PAID
             $total_amount_paid = (float) $callback['amount'];
-
+            // GETS INVOICES MATCHING THE GOTTEN CUSTOMER ID AND HAVE STATUS PENDING OR PARTIALLY PAID. GETS THE LATEST INVOICE
             $invoices = Invoice::query()
                 ->where('customer_id', $customer->id)
                 ->whereIn('status', [
@@ -138,35 +144,41 @@ class PaymentService
                 ->orderBy('issued_at')
                 ->lockForUpdate()
                 ->get();
-
+            if($invoices->isEmpty()){
+                return;
+            }
             foreach ($invoices as $invoice) {
-
+                //BREAKS THE ITERATION IF NO ACTUAL PAYMENT IS MADE
                 if ($total_amount_paid <= 0) {
                     break;
                 }
-
+                //
+                if (
+                    Payment::where('transaction_id', $callback['transaction_id'])->exists()
+                ){
+                    return;
+                }
+                // GETS THE MINIMUM AMOUNT BETWEEN THE RECEIVED AMOUNT AND THE LISTED BALANCE ON THE INVOICE
                 $allocation = min(
                     $total_amount_paid,
                     $invoice->balance
                 );
-
+                // OBJECT CREATION AND ASSIGNING OF DATA
                 $payment = new Payment();
 
                 $payment->customer_id = $customer->id;
                 $payment->invoice_id = $invoice->id;
-                $payment->amount = $allocation;
+                $payment->amount = $callback['transaction_amount'];
                 $payment->payment_method = 'MPESA';
-                $payment->reference = $callback['transaction_id'];
-                $payment->phone = $callback['phone'];
+                $payment->transaction_id = $callback['transaction_id'];
+                $payment->phone_number = $callback['phone_number'];
+                $payment->fname = $callback['fname'];
+                $payment->lname = $callback['lname'];
                 $payment->paid_at = now();
 
                 $payment->save();
-
+                // CALCULATES ANY EXTRA AMOUNT PAID WHERE IF THE BALANCE WAS FULLY SETTLES FOR THE CURRENT INVOICE IT BECOMES ZERO
                 $extra_amount_paid = $total_amount_paid - $allocation;
-
-                $newBalance = $invoice->balance - $allocation;
-
-                $this->invoiceService->updateStatus($invoice, $newBalance);
 
                 $receipt = new Receipt();
                 $this->receiptService

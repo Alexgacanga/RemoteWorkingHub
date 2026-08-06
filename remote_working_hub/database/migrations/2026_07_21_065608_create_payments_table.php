@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->enum('payment_method', ['cash', 'mpesa']);
-            $table->string('transaction_reference')->nullable();
+            $table->enum('payment_method', ['CASH', 'MPESA']);
+            $table->string('bill_reference')->nullable();
+            $table->string('transaction_id')->unique();
             $table->dateTime('payment_date')->nullable();
+            $table->string('phone_number');
             $table->decimal('amount', $total = 8, $places = 2);
+            $table->string('fname');
+            $table->string('lname');
             $table->foreignId('customer_id')->constrained()->nullOnDelete();
             $table->foreignId('invoice_id')->constrained()->nullOnDelete();
             $table->foreignId('user_id')->constrained()->nullable()->nullOnDelete();

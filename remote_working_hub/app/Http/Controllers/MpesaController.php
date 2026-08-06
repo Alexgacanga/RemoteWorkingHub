@@ -20,6 +20,10 @@ class MpesaController extends Controller
     }
     public function confirmation(Request $request): JsonResponse{
         $paymentData = $this->mpesaService->confirmation($request);
+        $log = $this->mpesaService->logCallback($paymentData);
+        $log->update([
+            'status' => 'PROCESSED'
+        ]);
         $this->paymentService->processC2BPayment($paymentData);
         return response()->json([
             "ResponseCode" => "0",
@@ -27,6 +31,6 @@ class MpesaController extends Controller
         ]);
     }
     public function registerUrls(){
-        
+
     }
 }

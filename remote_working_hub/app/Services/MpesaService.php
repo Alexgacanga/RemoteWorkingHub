@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Customer;
+use App\Models\MpesaCallbackLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http as Http;
 
@@ -30,7 +32,6 @@ class MpesaService
         );
     }
     public function validate(Request $request){
-
         return([
             'ResultCode' => '0',
             'ResultDesc' => 'Accepted'
@@ -41,11 +42,26 @@ class MpesaService
             'transaction_id' => $request->input('TransID'),
             'transaction_time' => $request->input('TransTime'),
             'transaction_amount' => $request->input('TransAmount'),
+            'bill_reference' => $request->input('BillRefNumber'),
             'phone_number' => $request->input('MSISDN'),
             'fname' => $request->input('FirstName'),
+            'lname' => $request->input('LastName'),
         ]);
     }
     public function confirmation(Request $request): array{
         return $this->parseConfirmation($request);
+    }
+    public function logCallback(array $callback): MpesaCallbackLog{
+        return MpesaCallbackLog::create([
+            'transaction_id' => $callback['transaction_id'],
+            'bill_reference' => $callback['bill_reference'],
+            'transaction_time' => $callback['transaction_time'],
+            'transaction_amount' => $callback['transaction_amount'],
+            'phone_number' => $callback['phone_number'],
+            'fname' => $callback['fname'],
+            'lname' => $callback['lname'],
+            'status' => 'RECEIVED',
+            'payload' => $callback,
+        ]);
     }
 }
