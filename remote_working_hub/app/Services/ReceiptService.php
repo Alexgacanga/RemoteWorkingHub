@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use App\Models\LastNumber;
 use App\Models\Payment;
 use App\Models\Receipt;
 use Illuminate\Support\Collection;
@@ -32,8 +33,12 @@ class ReceiptService
     }
     public function generateReceiptNumber(): string{
         $date = now()->format('Ymd');
-        $lastReceiptNumber = Receipt::latest('id')->first();
-        $nextReceiptNumber = $lastReceiptNumber ? $lastReceiptNumber->id + 1 : 1;
+        $lastReceiptNumber = LastNumber::where('doc_type', 'receipt')->value('last_number');
+        $nextReceiptNumber = $lastReceiptNumber + 1;
+        LastNumber::updateOrCreate(
+            ['doc_type' => 'receipt'],
+            ['last_number' => $nextReceiptNumber]
+        );
         return sprintf(
             'INV-%s-%05d',
             $date,

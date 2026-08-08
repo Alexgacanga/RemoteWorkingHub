@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Invoice;
+use App\Models\InvoiceSequence;
+use App\Models\LastNumber;
 use App\Models\Subscription;
 
 use function Symfony\Component\Clock\now;
@@ -15,8 +17,12 @@ class InvoiceService
     {}
     private function generateInvoiceNumber(): string{
         $date = now()->format('Ymd');
-        $lastInvoiceNumber = Invoice::latest('id')->first();
-        $nextInvoiceNumber = $lastInvoiceNumber ? $lastInvoiceNumber->id + 1 : 1;
+        $lastInvoiceNumber = LastNumber::where('doc_type', 'invoice')->value('last_number');
+        $nextInvoiceNumber = $lastInvoiceNumber + 1;
+        LastNumber::updateOrCreate(
+            ['doc_type' => 'invoice'],
+            ['last_number' => $nextInvoiceNumber]
+        );
         return sprintf(
             'INV-%s-%05d',
             $date,
