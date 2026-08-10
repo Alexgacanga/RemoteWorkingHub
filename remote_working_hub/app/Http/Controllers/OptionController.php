@@ -3,64 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\Option;
+use App\Services\OptionService;
 use Illuminate\Http\Request;
 
 class OptionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        protected OptionService $optionService,
+    )
+    {}
     public function index()
     {
-        $option = Option::all();
+        $option = $this->optionService->all();
         return view('admin.options', compact('option'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admins.options.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
-    {
-        //
+    {   $data = $request->validate([
+         'name' => 'required|string|max:255'
+            ]);
+        $this->optionService->create($data);
+        return redirect('admin.options');
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $option = $this->optionService->find($id);
+        return view('options.show', compact('option'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function activate(string $id)
     {
-        //
+        $option = $this->optionService->find($id);
+        $this->optionService->activate($option);
+        return redirect('options.activate');
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    public function deactivate(string $id)
+    {
+        $option = $this->optionService->find($id);
+        $this->optionService->deactivate($option);
+        return redirect('options.deactivate');
+    }
+    public function edit(string $id){
+        $option = $this->optionService->find($id);
+        return view('options.edit', compact('option'));
+    }
     public function update(Request $request, string $id)
-    {
-        //
+    {   $option = $this->optionService->find($id);
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        $this->optionService->update($option, $data);
+        return redirect('admins.options');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $option = $this->optionService->find($id);
+        $this->optionService->delete($option);
+        return redirect('admins.options');
     }
 }

@@ -19,6 +19,9 @@ class OptionService
         ->orderBy('name')
         ->get();
     }
+    public function find(string $id): Option{
+        return OPtion::findOrFail($id);
+    }
     public function is_active(): Collection{
         return Option::where('is_active', true)
         ->withCount('packages')
