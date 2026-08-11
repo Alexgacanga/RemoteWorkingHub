@@ -69,25 +69,23 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- Row 1: M-Pesa Success -->
+                            @foreach ($payment as $payment)
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <div class="font-medium text-gray-900">Today, 10:23 AM</div>
+                                    <div class="font-medium text-gray-900">{{ $payment->payment_date }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">John Doe</div>
-                                    <div class="text-sm text-gray-500">+254712345678</div>
+                                    <div class="text-sm font-medium text-gray-900">{{ $payment->fname }}</div>
+                                    <div class="text-sm text-gray-500">{{ $payment->phone_number }}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Daily Open Desk</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $payment->package->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-mono text-gray-900">QWE1234567</div>
-                                    <div class="text-xs text-green-600 font-medium">M-Pesa</div>
+                                    <div class="text-sm font-mono text-gray-900">{{ $payment->transaction_id }}</div>
+                                    <div class="text-xs text-green-600 font-medium">{{ $payment->payment_method }}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 text-right">KES 1,500</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 text-right">KES {{ $payment->amount }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        Success
-                                    </span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">{{ $payment->status }}</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <button class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-md transition-colors inline-flex items-center">
@@ -96,34 +94,7 @@
                                     </button>
                                 </td>
                             </tr>
-
-                            <!-- Row 2: Cash Payment -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <div class="font-medium text-gray-900">Today, 09:15 AM</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">Jane Smith</div>
-                                    <div class="text-sm text-gray-500">TechCorp Ltd</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Weekly Board Room</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">-</div>
-                                    <div class="text-xs text-gray-600 font-medium">Cash</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 text-right">KES 35,000</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        Success
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-md transition-colors inline-flex items-center">
-                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                        Receipt
-                                    </button>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

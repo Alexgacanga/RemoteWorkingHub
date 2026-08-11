@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        protected CustomerService $customerService
+    )
+    {}
     public function index()
     {
-        $customer = Customer::all();
+        $customer = $this->customerService->all();
         return view('admin.customers', compact('customer'));
     }
 

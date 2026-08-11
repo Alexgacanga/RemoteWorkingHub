@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        protected PaymentService $paymentService,
+    )
+    {}
     public function index()
     {
-        $payment = Payment::all();
+        $payment = $this->paymentService->all();
         return view('admin.payments', compact('payment'));
     }
     public function recordCash()

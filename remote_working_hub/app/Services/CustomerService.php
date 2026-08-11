@@ -28,4 +28,7 @@ class CustomerService
         $customer->save();
         return $customer->fresh();
     }
+    public function all(){
+        return Customer::latest()->get();
+    }
 }

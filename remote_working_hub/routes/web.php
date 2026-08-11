@@ -22,7 +22,7 @@ Route::prefix('pay')->group(function (){
 
 Route::get('dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('main');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,11 +31,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 
+    // PAYMENTS
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/record-cash', [PaymentController::class, 'recordCash'])->name('payments.record-cash');
     Route::get('/payments/mpesa-prompt', [PaymentController::class, 'mpesaPrompt'])->name('payments.mpesa-prompt');
     Route::get('/payments/mpesa-code', [PaymentController::class, 'mpesaCode'])->name('payments.mpesa-code');
 
+
+    // ROLES
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
 
     Route::get('/options', [OptionController::class, 'index'])->name('options.index');

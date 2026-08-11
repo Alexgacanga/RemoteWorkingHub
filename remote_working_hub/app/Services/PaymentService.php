@@ -17,8 +17,6 @@ class PaymentService
 {
     public function __construct(
         protected ReceiptService $receiptService,
-        protected InvoiceService $invoiceService,
-        protected SubscriptionService $subscriptionService
     ) {
         //
     }
