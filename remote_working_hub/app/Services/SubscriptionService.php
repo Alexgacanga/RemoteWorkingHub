@@ -87,4 +87,20 @@ class SubscriptionService
             $this->invoiceService->createInvoice($subscription);
         });
     }
+    public function cancelSubscription(Subscription $subscription): void{
+        if ($subscription->status === 'active'){
+            throw ValidationException::withMessages([
+                'subscription' => 'Cannot cancel an active subscription.'
+            ]);
+        }
+        $subscription->update(['status' => 'cancelled']);
+    }
+    public function activateSubscription(Subscription $subscription): void{
+        if ($subscription->status !== 'cancelled'){
+            throw ValidationException::withMessages([
+                'subscription' => 'Cannot activate a non-cancelled subscription.'
+            ]);
+        }
+        $subscription->update(['status' => 'pending']);
+    }
 }

@@ -22,11 +22,10 @@ return new class extends Migration
             $table->decimal('amount', $total = 8, $places = 2);
             $table->string('fname');
             $table->string('lname');
-            $table->foreignId('customer_id')->constrained()->nullOnDelete();
-            $table->foreignId('invoice_id')->constrained()->nullOnDelete();
-            $table->foreignId('user_id')->constrained()->nullable()->nullOnDelete();
-            $table->foreignId('package_id')->constrained()->nullOnDelete();
-            $table->foreignId('receipt_id')->constrained()->nullOnDelete();
+            $table->foreignId('customer_id')->constrained()->onDelete('restrict');
+            $table->foreignId('invoice_id')->constrained()->onDelete('restrict');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('package_id')->constrained()->onDelete('restrict');
         });
     }
 

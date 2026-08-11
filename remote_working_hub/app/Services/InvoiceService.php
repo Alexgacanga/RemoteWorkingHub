@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceSequence;
 use App\Models\LastNumber;
 use App\Models\Subscription;
+use Illuminate\Validation\ValidationException as ValidationException;
 
 use function Symfony\Component\Clock\now;
 
@@ -43,6 +44,28 @@ class InvoiceService
 
         ]);
     }
+    public function cancelInvoice(Invoice $invoice): void{
+        if ($invoice->status === ['overdue', 'partially_paid', 'paid']){
+            throw ValidationException::withMessages([
+                'invoice' => 'Cannot cancel this invoice!'
+            ]);
+        }
+        $invoice->update([
+            'status' => 'cancelled'
+        ]);
+    }
+    // public function cancelOnDeadline(Invoice $invoice): void{
+    //     if ($invoice->subscription()->value('end_date') < now() && $invoice->status === 'pending'){
+    //         $invoice->update([
+    //             'status' => 'cancelled'
+    //         ]);
+    //     }
+    //     else{
+    //         throw ValidationException::withMessages([
+    //             'invoice' => 'Cannot cancel this invoice!'
+    //         ]);
+    //     }
+    // }
     public function updateTotals(Invoice $invoice): Invoice{
         $paid = $invoice->payments()->sum('amount');
         $balance = $invoice->total_amount - $paid;
