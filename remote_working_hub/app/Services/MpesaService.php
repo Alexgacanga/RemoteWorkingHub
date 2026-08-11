@@ -31,7 +31,15 @@ class MpesaService
             ]
         );
     }
-    public function validate(Request $request){
+    public function validate(Request $request): array{
+        $paymentId = $request->input('BillRefNumber');
+        $customer = Customer::where('payment_id', $paymentId)->first();
+        if(! $customer){
+            return([
+                'ResultCode' => '1',
+                'ResultDesc' => 'Invalid account number'
+            ]);
+        }
         return([
             'ResultCode' => '0',
             'ResultDesc' => 'Accepted'
