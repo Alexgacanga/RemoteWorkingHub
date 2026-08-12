@@ -1,9 +1,9 @@
 <x-main-layout>
-    <div class="min-h-screen w-full bg-white text-black" style="font-family: 'Poppins', sans-serif;">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <div class="min-h-screen w-full bg-white text-black" style="font-size: 14px; font-family: 'Poppins', sans-serif;">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 xl:py-10 2xl:py-12">
             <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div class="flex items-center gap-3">
-                    <h1 class="text-3xl font-bold tracking-tight text-black sm:text-4xl">Payments</h1>
+                    <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Payments</h1>
                     <span
                         class="inline-flex items-center gap-2 rounded-full border border-[#DDF6E7] bg-[#EAFBF2] px-2.5 py-1 text-[11px] font-semibold text-[#1D8D61]">
                         <span class="relative flex h-2.5 w-2.5">
@@ -17,28 +17,28 @@
 
                 <div class="flex flex-col gap-3 sm:flex-row">
                     <button type="button"
-                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#e7583d] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-4 py-3 text-xs font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#e7583d] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2.2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                         </svg>
-                        Add New Cash Payment
+                        Add Cash
                     </button>
 
                     <button type="button"
-                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#4FC1FF] px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#38b5f5] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF] focus-visible:ring-offset-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#4FC1FF] px-4 py-3 text-xs font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#38b5f5] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF] focus-visible:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2.2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Verify M-Pesa Payment
+                        Verify Payment
                     </button>
                 </div>
             </div>
 
             <div
-                class="mb-6 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+                class="mb-6 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-3 lg:flex-row lg:items-center lg:justify-between">
                 <label class="relative block w-full max-w-lg">
                     <span class="sr-only">Search payments</span>
                     <svg xmlns="http://www.w3.org/2000/svg"

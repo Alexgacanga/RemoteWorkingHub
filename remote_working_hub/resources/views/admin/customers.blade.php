@@ -1,23 +1,23 @@
 <x-main-layout>
     <div class="min-h-screen bg-white" style="font-family: 'Poppins', sans-serif;">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  xl:py-10 2xl:py-12">
             <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-black sm:text-4xl">Customers</h1>
+                    <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Customers</h1>
                 </div>
 
                 <button type="button"
-                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-5 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#e7573b] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-5 py-3 text-xs font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#e7573b] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2.2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
-                    Add New Customer
+                    Add Customer
                 </button>
             </div>
 
             <div
-                class="mb-6 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+                class="mb-6 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-3 lg:flex-row lg:items-center lg:justify-between">
                 <label class="relative block w-full max-w-lg">
                     <span class="sr-only">Search customers</span>
                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@
             <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md">
                 <div class="overflow-x-auto">
                     <table class="min-w-full border-collapse">
-                        <thead class="bg-gray-50 text-left text-sm font-semibold text-black">
+                        <thead class="bg-gray-50 text-left text-xs font-semibold uppercase tracking-[0.14em] text-gray-600">
                             <tr>
                                 <th scope="col" class="whitespace-nowrap px-4 py-3.5">Payment ID</th>
                                 <th scope="col" class="whitespace-nowrap px-4 py-3.5">First Name</th>
@@ -54,63 +54,57 @@
                                 <th scope="col" class="whitespace-nowrap px-4 py-3.5">Phone</th>
                                 <th scope="col" class="whitespace-nowrap px-4 py-3.5">ID Number</th>
                                 <th scope="col" class="whitespace-nowrap px-4 py-3.5">Status</th>
-                                <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-right">Edit</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-right">Actions</th>
                             </tr>
                         </thead>
 
                         <tbody class="divide-y divide-gray-200 bg-white text-sm text-gray-600">
-                            @forelse ($customer as $customerItem)
-                                @php
-                                    $status = $loop->iteration % 2 === 0 ? 'Active' : 'Dormant';
-                                    $statusClasses =
-                                        $status === 'Active'
-                                            ? 'border border-[#D9F5EA] bg-[#EAFBF2] text-[#1B8F5C]'
-                                            : 'border border-[#F8D7D7] bg-[#FFF3F2] text-[#CF4D4D]';
-                                @endphp
 
                                 <tr class="transition-colors hover:bg-gray-50">
                                     <td class="whitespace-nowrap px-4 py-4 font-medium text-black">
-                                        {{ $customerItem->payment_id ?? 'PAY-' . str_pad((string) $loop->iteration, 4, '0', STR_PAD_LEFT) }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $customerItem->fname ?? '—' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $customerItem->lname ?? '—' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $customerItem->email ?? '—' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $customerItem->phone_no ?? '—' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $customerItem->id_no ?? '—' }}
+                                        Sample
                                     </td>
                                     <td class="px-4 py-4">
                                         <span
-                                            class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold {{ $statusClasses }}">
-                                            {{ $status }}
+                                            class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold">
+                                            Sample
                                         </span>
                                     </td>
-                                    <td class="px-4 py-4 text-right">
-                                        <button type="button"
-                                            class="inline-flex items-center gap-2 rounded-lg border border-[#4FC1FF]/30 bg-[#4FC1FF]/10 px-3 py-2 text-sm font-semibold text-[#0A8FD9] transition duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF] focus-visible:ring-offset-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-7-7l7-7m0 0v5m0-5h-5" />
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                    <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:opacity-100">
+                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]" title="Edit customer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
-                                            Edit
                                         </button>
-                                    </td>
+                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Subsribe">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
                                 </tr>
-                            @empty
+                            {{-- @empty
                                 <tr>
                                     <td colspan="8" class="px-6 py-10 text-center text-sm text-gray-500">No customers
                                         found.</td>
-                                </tr>
-                            @endforelse
+                                </tr> --}}
                         </tbody>
                     </table>
                 </div>
