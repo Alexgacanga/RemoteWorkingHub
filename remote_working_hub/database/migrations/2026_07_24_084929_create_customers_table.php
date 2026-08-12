@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone_no')->unique();
             $table->string('id_no')->unique()->nullable();
+            $table->enum('status', ['active', 'dormant'])->default('active');
         });
 
     }

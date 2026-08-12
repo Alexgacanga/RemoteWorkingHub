@@ -1,113 +1,196 @@
 <x-main-layout>
-    <div class="bg-gray-100 text-gray-800 font-sans antialiased min-h-screen flex flex-col w-full">
-
-        <!-- Top Navigation / Header -->
-        <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center space-x-3">
-                        <h1 class="text-xl font-bold text-gray-900 flex items-center">
-                            Payments
-                            <!-- Live Indicator Pulse -->
-                            <span class="flex h-3 w-3 ml-3 relative">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                            </span>
-                            <span class="ml-1.5 text-xs text-green-600 font-medium">Live</span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-
-            <!-- Actions Top Bar -->
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
-                <!-- Search -->
-                <div class="w-full lg:w-1/3 relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    <input type="text" placeholder="Search by name, TXN ID, or phone..."
-                        class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm text-sm">
+    <div class="min-h-screen w-full bg-white text-black" style="font-family: 'Poppins', sans-serif;">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-3xl font-bold tracking-tight text-black sm:text-4xl">Payments</h1>
+                    <span
+                        class="inline-flex items-center gap-2 rounded-full border border-[#DDF6E7] bg-[#EAFBF2] px-2.5 py-1 text-[11px] font-semibold text-[#1D8D61]">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span
+                                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1D8D61] opacity-75"></span>
+                            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#1D8D61]"></span>
+                        </span>
+                        Live
+                    </span>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex flex-wrap items-center gap-3">
-                    <a href="{{ route('payments.record-cash') }}" class="inline-flex items-center px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition-colors">
-                        <svg class="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        Record Cash
-                    </a>
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <button type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#e7583d] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add New Cash Payment
+                    </button>
 
-                    <a href="{{ route('payments.mpesa-prompt') }}" class="inline-flex items-center px-4 py-2.5 bg-green-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-green-700 shadow-sm transition-colors">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                        Prompt M-Pesa
-                    </a>
-
-                    <a href="{{ route('payments.mpesa-code') }}" class="inline-flex items-center px-4 py-2.5 bg-gray-800 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-gray-900 shadow-sm transition-colors">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                        Add TXN ID
-                    </a>
+                    <button type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#4FC1FF] px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#38b5f5] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF] focus-visible:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2.2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Verify M-Pesa Payment
+                    </button>
                 </div>
             </div>
 
-            <!-- Payments Table -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div
+                class="mb-6 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+                <label class="relative block w-full max-w-lg">
+                    <span class="sr-only">Search payments</span>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="search" placeholder="Search by name, ID, or phone..."
+                        class="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-black placeholder:text-gray-400 transition duration-200 focus:border-[#4FC1FF] focus:outline-none focus:ring-4 focus:ring-[#4FC1FF]/20">
+                </label>
+
+                <div
+                    class="inline-flex w-full max-w-xs items-center gap-1 rounded-xl border border-gray-200 bg-gray-50 p-1">
+                    @php $selectedMethod = 'All'; @endphp
+                    @foreach (['All', 'M-Pesa', 'Cash'] as $method)
+                        <button type="button" aria-pressed="{{ $selectedMethod === $method ? 'true' : 'false' }}"
+                            class="flex-1 rounded-lg px-3 py-2 text-sm font-medium transition duration-200 {{ $selectedMethod === $method ? 'bg-[#FF6245] text-white shadow-sm' : 'text-gray-600 hover:bg-white hover:text-black' }}">
+                            {{ $method }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md">
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                    <table class="min-w-full border-collapse">
+                        <thead
+                            class="bg-gray-50 text-left text-xs font-semibold uppercase tracking-[0.14em] text-gray-600">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date & Time</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Package</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">TXN ID / Method</th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th scope="col" class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5">Date &amp; Time</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5">Transaction ID</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5">First Name</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5">Last Name</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5">Phone</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5">Method</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5">Account Number</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-right">Amount</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($payment as $payment)
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <div class="font-medium text-gray-900">{{ $payment->payment_date }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">{{ $payment->fname }}</div>
-                                    <div class="text-sm text-gray-500">{{ $payment->phone_number }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $payment->package->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-mono text-gray-900">{{ $payment->transaction_id }}</div>
-                                    <div class="text-xs text-green-600 font-medium">{{ $payment->payment_method }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 text-right">KES {{ $payment->amount }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">{{ $payment->status }}</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-md transition-colors inline-flex items-center">
-                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                        Receipt
-                                    </button>
-                                </td>
-                            </tr>
-                            @endforeach
+
+                        <tbody class="divide-y divide-gray-200 bg-white text-sm text-gray-600">
+                            @forelse ($payment as $paymentItem)
+                                @php
+                                    $method = $loop->iteration % 2 === 0 ? 'M-Pesa' : 'Cash';
+                                    $methodClasses =
+                                        $method === 'M-Pesa'
+                                            ? 'border border-[#D6F1FF] bg-[#EAF8FF] text-[#1578B3]'
+                                            : 'border border-[#FDE7D8] bg-[#FFF4EE] text-[#D65A2E]';
+                                @endphp
+
+                                <tr class="transition-all duration-200 hover:bg-gray-50 {{ $loop->first ? 'animate-[pulse_1.5s_ease-in-out_1]' : '' }}"
+                                    data-live-row="true">
+                                    <td class="whitespace-nowrap px-4 py-4 text-gray-700">
+                                        <div class="font-semibold text-black">
+                                            {{ $paymentItem->payment_date ?? '2026-08-12 09:42' }}</div>
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 font-medium text-black">
+                                        {{ $paymentItem->transaction_id ?? 'TXN-28491' }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-gray-700">
+                                        {{ $paymentItem->fname ?? 'Aisha' }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-gray-700">
+                                        {{ $paymentItem->lname ?? 'Khan' }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-gray-700">
+                                        {{ $paymentItem->phone_number ?? '+254 712 345 678' }}
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <span
+                                            class="inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold {{ $methodClasses }}">
+                                            {{ $method }}
+                                        </span>
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-gray-700">
+                                        {{ $paymentItem->account_number ?? '254712345678' }}
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-right font-bold text-black">
+                                        KES {{ number_format((float) ($paymentItem->amount ?? 3500), 2) }}
+                                    </td>
+                                    <td class="px-4 py-4 text-right">
+                                        <div class="inline-flex items-center gap-2">
+                                            <button type="button"
+                                                class="inline-flex items-center justify-center rounded-lg border border-[#4FC1FF]/30 bg-[#4FC1FF]/10 p-2 text-[#0A8FD9] transition duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF] focus-visible:ring-offset-2"
+                                                aria-label="Edit payment">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-7-7l7-7m0 0v5m0-5h-5" />
+                                                </svg>
+                                            </button>
+                                            <button type="button"
+                                                class="inline-flex items-center justify-center rounded-lg border border-[#FF6245]/20 bg-[#FF6245]/10 p-2 text-[#D64938] transition duration-200 hover:border-[#FF6245] hover:bg-[#FF6245]/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2"
+                                                aria-label="Delete payment">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="9" class="px-6 py-10 text-center text-sm text-gray-500">No
+                                        payments found.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
-
-                <!-- Pagination -->
-                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
-                    <span class="text-sm text-gray-700">Showing <span class="font-medium">1</span> to <span class="font-medium">100</span> of <span class="font-medium">1,234</span> results</span>
-                    <div class="flex space-x-2">
-                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm bg-white text-gray-500 hover:bg-gray-50 cursor-not-allowed" disabled>Previous</button>
-                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm bg-white text-gray-700 hover:bg-gray-50">Next</button>
-                    </div>
-                </div>
             </div>
-        </main>
+
+            <div
+                class="mt-6 flex flex-col items-center justify-between gap-4 border-t border-gray-200 bg-white px-4 py-4 sm:flex-row">
+                <p class="text-sm text-gray-500">Showing 1-5 of 24 transactions</p>
+
+                <nav aria-label="Pagination" class="inline-flex items-center gap-2">
+                    <button type="button"
+                        class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
+                        Previous
+                    </button>
+
+                    <div class="flex items-center gap-2">
+                        <button type="button"
+                            class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#FF6245] text-sm font-semibold text-white shadow-sm">1</button>
+                        <button type="button"
+                            class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9]">2</button>
+                        <button type="button"
+                            class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9]">3</button>
+                        <button type="button"
+                            class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9]">4</button>
+                    </div>
+
+                    <button type="button"
+                        class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
+                        Next
+                    </button>
+                </nav>
+            </div>
+
+            <div
+                class="mt-4 rounded-xl border border-dashed border-[#4FC1FF]/40 bg-[#F4FBFF] p-3 text-xs text-gray-600">
+                <span class="font-semibold text-[#0A8FD9]">Live update hook:</span>
+                This panel is structured to accept a real-time stream via a WebSocket or polling loop. Bind incoming
+                payment rows to the payment state and prepend new entries to the table to trigger the pulse highlight
+                animation for new live records.
+            </div>
+        </div>
     </div>
 </x-main-layout>

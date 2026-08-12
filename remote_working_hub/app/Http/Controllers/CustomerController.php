@@ -17,6 +17,11 @@ class CustomerController extends Controller
         $customer = $this->customerService->all();
         return view('admin.customers', compact('customer'));
     }
+    public function indexDashboard()
+    {
+        $customer = $this->customerService->all();
+        return view('dashboard', compact('customer'));
+    }
 
     /**
      * Show the form for creating a new resource.

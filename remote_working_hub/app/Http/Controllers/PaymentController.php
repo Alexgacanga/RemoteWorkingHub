@@ -17,6 +17,7 @@ class PaymentController extends Controller
         $payment = $this->paymentService->all();
         return view('admin.payments', compact('payment'));
     }
+
     public function recordCash()
     {
 
