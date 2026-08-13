@@ -6,14 +6,16 @@
                     <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Customers</h1>
                 </div>
 
-                <button type="button"
-                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-5 py-3 text-xs font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#e7573b] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2.2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
-                    Add Customer
-                </button>
+                <a href="{{ route('customers.create') }}">
+                    <button type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-5 py-3 text-xs font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#e7573b] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Customer
+                    </button>
+                </a>
             </div>
 
             <div
@@ -30,16 +32,20 @@
                         class="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-black placeholder:text-gray-400 transition duration-200 focus:border-[#4FC1FF] focus:outline-none focus:ring-4 focus:ring-[#4FC1FF]/20">
                 </label>
 
-                <div
-                    class="inline-flex w-full max-w-xs items-center gap-1 rounded-xl border border-gray-200 bg-gray-50 p-1">
-                    @php $selectedFilter = 'All'; @endphp
-                    @foreach (['All', 'Active', 'Dormant'] as $filterOption)
-                        <button type="button" aria-pressed="{{ $selectedFilter === $filterOption ? 'true' : 'false' }}"
-                            class="flex-1 rounded-lg px-3 py-2 text-sm font-medium transition duration-200 {{ $selectedFilter === $filterOption ? 'bg-[#FF6245] text-white shadow-sm' : 'text-gray-600 hover:bg-white hover:text-black' }}">
-                            {{ $filterOption }}
-                        </button>
-                    @endforeach
-                </div>
+                <div class="inline-flex w-full max-w-xs items-center gap-1 rounded-xl border border-gray-200 bg-gray-50 p-1">
+    @php
+        // Grab the status from the URL, defaulting to 'All', and capitalize it to match your array
+        $selectedFilter = ucfirst(request('status', 'All'));
+    @endphp
+
+    @foreach (['All', 'Active', 'Dormant'] as $filterOption)
+        <a href="{{ route('customers.index', ['status' => strtolower($filterOption)]) }}"
+            aria-pressed="{{ $selectedFilter === $filterOption ? 'true' : 'false' }}"
+            class="flex-1 text-center rounded-lg px-3 py-2 text-sm font-medium transition duration-200 {{ $selectedFilter === $filterOption ? 'bg-[#FF6245] text-white shadow-sm' : 'text-gray-600 hover:bg-white hover:text-black' }}">
+            {{ $filterOption }}
+        </a>
+    @endforeach
+</div>
             </div>
 
             <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md">
@@ -59,30 +65,30 @@
                         </thead>
 
                         <tbody class="divide-y divide-gray-200 bg-white text-sm text-gray-600">
-
+                                @foreach ($customer as $customer)
                                 <tr class="transition-colors hover:bg-gray-50">
                                     <td class="whitespace-nowrap px-4 py-4 font-medium text-black">
-                                        Sample
+                                        {{ $customer->payment_id }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        Sample
+                                        {{ $customer->fname }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        Sample
+                                        {{ $customer->lname }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        Sample
+                                        {{ $customer->email }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        Sample
+                                        {{ $customer->phone_no }}
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        Sample
+                                        {{ $customer->id_no }}
                                     </td>
                                     <td class="px-4 py-4">
                                         <span
                                             class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold">
-                                            Sample
+                                            {{ $customer->status }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right">
@@ -92,7 +98,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
                                         </button>
-                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Subsribe">
+                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Subscribe">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                                             </svg>
@@ -100,6 +106,8 @@
                                     </div>
                                 </td>
                                 </tr>
+                                @endforeach
+
                             {{-- @empty
                                 <tr>
                                     <td colspan="8" class="px-6 py-10 text-center text-sm text-gray-500">No customers

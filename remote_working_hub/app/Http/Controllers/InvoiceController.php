@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use App\Services\CustomerService;
+use App\Services\InvoiceService;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class InvoiceController extends Controller
 {
     public function __construct(
-        protected CustomerService $customerService
+        protected InvoiceService $invoiceService
     )
     {}
-    public function index(Request $request)
-    {
-        $customer = $this->customerService->all($request);
-        return view('admin.customers', compact('customer'));
+    public function index()
+    {   
+        $invoice = $this->invoiceService->all();
+        return view('admin.invoices', compact('invoice'));
     }
 
     /**
@@ -23,7 +22,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('pages.add-customer');
+        //
     }
 
     /**
@@ -31,9 +30,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $this->customerService->store($request);
-
-        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
+        //
     }
 
     /**

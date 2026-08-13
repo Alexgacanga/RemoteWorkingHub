@@ -82,50 +82,50 @@
                         </thead>
 
                         <tbody class="divide-y divide-gray-200 bg-white text-sm text-gray-600">
-                            @forelse ($payment as $paymentItem)
+                            {{-- @forelse ($payment as $paymentItem)
                                 @php
                                     $method = $loop->iteration % 2 === 0 ? 'M-Pesa' : 'Cash';
                                     $methodClasses =
                                         $method === 'M-Pesa'
                                             ? 'border border-[#D6F1FF] bg-[#EAF8FF] text-[#1578B3]'
                                             : 'border border-[#FDE7D8] bg-[#FFF4EE] text-[#D65A2E]';
-                                @endphp
+                                @endphp --}}
 
-                                <tr class="transition-all duration-200 hover:bg-gray-50 {{ $loop->first ? 'animate-[pulse_1.5s_ease-in-out_1]' : '' }}"
+                                <tr class="transition-all duration-200 hover:bg-gray-50 {{-- {{ $loop->first ? 'animate-[pulse_1.5s_ease-in-out_1]' : '' }} --}}"
                                     data-live-row="true">
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
                                         <div class="font-semibold text-black">
-                                            {{ $paymentItem->payment_date ?? '2026-08-12 09:42' }}</div>
+                                            Sample</div>
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 font-medium text-black">
-                                        {{ $paymentItem->transaction_id ?? 'TXN-28491' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $paymentItem->fname ?? 'Aisha' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $paymentItem->lname ?? 'Khan' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $paymentItem->phone_number ?? '+254 712 345 678' }}
+                                        Sample
                                     </td>
                                     <td class="px-4 py-4">
                                         <span
-                                            class="inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold {{ $methodClasses }}">
-                                            {{ $method }}
+                                            class="inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold">
+                                            Sample
                                         </span>
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-gray-700">
-                                        {{ $paymentItem->account_number ?? '254712345678' }}
+                                        Sample
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-4 text-right font-bold text-black">
-                                        KES {{ number_format((float) ($paymentItem->amount ?? 3500), 2) }}
+                                        KES Sample
                                     </td>
                                     <td class="px-4 py-4 text-right">
                                         <div class="inline-flex items-center gap-2">
                                             <button type="button"
                                                 class="inline-flex items-center justify-center rounded-lg border border-[#4FC1FF]/30 bg-[#4FC1FF]/10 p-2 text-[#0A8FD9] transition duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF] focus-visible:ring-offset-2"
-                                                aria-label="Edit payment">
+                                                aria-label="Edit payment" title="Edit Payment">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -134,7 +134,7 @@
                                             </button>
                                             <button type="button"
                                                 class="inline-flex items-center justify-center rounded-lg border border-[#FF6245]/20 bg-[#FF6245]/10 p-2 text-[#D64938] transition duration-200 hover:border-[#FF6245] hover:bg-[#FF6245]/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6245] focus-visible:ring-offset-2"
-                                                aria-label="Delete payment">
+                                                aria-label="Delete payment" title="Delete Payment">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                                     stroke-width="2">
@@ -145,13 +145,13 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
+                            {{-- @empty
                                 <tr>
                                     <td colspan="9" class="px-6 py-10 text-center text-sm text-gray-500">No
                                         payments found.</td>
                                 </tr>
                             @endforelse
-                        </tbody>
+                        </tbody> --}}
                     </table>
                 </div>
             </div>
@@ -182,14 +182,6 @@
                         Next
                     </button>
                 </nav>
-            </div>
-
-            <div
-                class="mt-4 rounded-xl border border-dashed border-[#4FC1FF]/40 bg-[#F4FBFF] p-3 text-xs text-gray-600">
-                <span class="font-semibold text-[#0A8FD9]">Live update hook:</span>
-                This panel is structured to accept a real-time stream via a WebSocket or polling loop. Bind incoming
-                payment rows to the payment state and prepend new entries to the table to trigger the pulse highlight
-                animation for new live records.
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@ class SubscriptionService
     ){}
     public function all(): Collection{
         return Subscription::with('package')
-            ->orderBy(Subscription::with('customer')->customer()->name)
+            ->latest()
             ->get();
     }
     public function pending(): Collection{

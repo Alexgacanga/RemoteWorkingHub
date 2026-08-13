@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use App\Services\CustomerService;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class SubscriptionController extends Controller
 {
     public function __construct(
-        protected CustomerService $customerService
+        protected SubscriptionService $subscriptionService
     )
     {}
-    public function index(Request $request)
+    public function index()
     {
-        $customer = $this->customerService->all($request);
-        return view('admin.customers', compact('customer'));
+        $subscription = $this->subscriptionService->all();
+        return view('admin.subscriptions', compact('subscription'));
     }
 
     /**
@@ -23,7 +22,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('pages.add-customer');
+        //
     }
 
     /**
@@ -31,9 +30,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $this->customerService->store($request);
-
-        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
+        //
     }
 
     /**
