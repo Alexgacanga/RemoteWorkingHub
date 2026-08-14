@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Option;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 use function Pest\Laravel\get;
@@ -14,11 +15,7 @@ class OptionService
     {
         //
     }
-    public function all(): Collection{
-        return Option::withCount('packages')
-        ->orderBy('name')
-        ->get();
-    }
+    
     public function find(string $id): Option{
         return OPtion::findOrFail($id);
     }
@@ -30,6 +27,23 @@ class OptionService
     }
     public function create(array $data): Option{
         return Option::create($data);
+    }
+    public function store(Request $request){
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'string',
+            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_active' => 'boolean',
+        ]);
+         if ($request->hasFile('cover_image')) {
+
+        $path = $request->file('cover_image')->store('pictures', 'public');
+
+    }
+        Option::create([
+            ...$validated,
+            'cover_image' => $path ?? null
+        ]);
     }
     public function update(Option $option, array $data): Option{
         $option->update($data);

@@ -164,11 +164,10 @@
 
             <a href="#"
                 class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+</svg>
+
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Expenses</span>
                 <span
                     class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Expenses</span>
@@ -176,14 +175,25 @@
 
             <a href="#"
                 class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12l2-1 2 1 2-1 2 1 2-1 2 1V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9h6m-6-4h6" />
+</svg>
+
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Receipts</span>
                 <span
                     class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Receipts</span>
+            </a>
+            <a href="{{ route('options.index') }}"
+                class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+</svg>
+
+
+
+                <span class="nav-label truncate transition-all duration-300 ease-in-out">Space options</span>
+                <span
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Space options</span>
             </a>
 
             <a href="#"
@@ -378,5 +388,6 @@
 
     setCollapsedState(false);
 </script>
+
 </body>
 </html>

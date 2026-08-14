@@ -12,10 +12,31 @@ class CustomerController extends Controller
         protected CustomerService $customerService
     )
     {}
-    public function index(Request $request)
+
+public function index(Request $request)
     {
-        $customer = $this->customerService->all($request);
-        return view('admin.customers', compact('customer'));
+        $query = Customer::query();
+
+        if ($request->filled('status') && strtolower($request->status) !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('fname', 'LIKE', $searchTerm)
+                  ->orWhere('lname', 'LIKE', $searchTerm)
+                  ->orWhere('email', 'LIKE', $searchTerm)
+                  ->orWhere('payment_id', 'LIKE', $searchTerm);
+            });
+        }
+
+        $customers = $query->latest()->paginate(10)->withQueryString();
+
+        return view('admin.customers', [
+            'customers' => $customers
+        ]);
     }
 
     /**

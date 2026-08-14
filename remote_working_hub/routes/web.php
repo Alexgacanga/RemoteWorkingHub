@@ -51,7 +51,11 @@ Route::middleware('auth')->group(function () {
     //INVOICES
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 
+    // OPTIONS
     Route::get('/options', [OptionController::class, 'index'])->name('options.index');
+    Route::get('/options/create', [OptionController::class, 'create'])->name('options.create');
+    Route::post('/options', [OptionController::class, 'store'])->name('options.store');
+    Route::post('/upload-image', [ImageUploadController::class, 'store'])->name('upload.image');
 
     Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 

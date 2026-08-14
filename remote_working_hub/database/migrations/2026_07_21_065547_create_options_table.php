@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->longText('description');
+            $table->string('cover_image')->nullable();
             $table->boolean('is_active')->default(true);
         });
     }

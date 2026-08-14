@@ -1,174 +1,151 @@
 <x-main-layout>
-    <div class="bg-gray-100 text-gray-800 font-sans antialiased min-h-screen flex flex-col w-full">
-
-        <!-- Top Navigation / Header -->
-        <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center space-x-3">
-                        <h1 class="text-xl font-bold text-gray-900">Hub Options Management</h1>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
+    <div class="min-h-screen bg-white flex flex-col w-full" style="font-family: 'Poppins', sans-serif;">
+        <!-- Main Workspace -->
         <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-                <!-- Left Column: Create Form (Takes up 4 columns on large screens) -->
-                <div class="lg:col-span-4">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden sticky top-24">
-                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
-                            <h2 class="text-lg font-semibold text-gray-900">Create New Option</h2>
-                            <p class="text-sm text-gray-500 mt-1">Add a new amenity or service package.</p>
-                        </div>
-
-                        <form action="#" method="POST" class="p-6 space-y-5">
-
-                            <!-- Image Upload Field -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Cover Image</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:bg-gray-50 transition-colors duration-200 group cursor-pointer">
-                                    <div class="space-y-1 text-center">
-                                        <svg class="mx-auto h-12 w-12 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <div class="flex text-sm text-gray-600 justify-center">
-                                            <label for="file-upload" class="relative cursor-pointer bg-transparent rounded-md font-medium text-blue-500 hover:text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                                <span>Upload a file</span>
-                                                <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
-                                            </label>
-                                            <p class="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p class="text-xs text-gray-500">PNG, JPG, WEBP up to 5MB</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Option Name Field -->
-                            <div>
-                                <label for="option-name" class="block text-sm font-medium text-gray-700 mb-1">Option Name</label>
-                                <input type="text" id="option-name" name="option-name" placeholder="e.g., Dedicated Desk" required
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 shadow-sm placeholder-gray-400">
-                            </div>
-
-                            <!-- Description Field -->
-                            <div>
-                                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                <textarea id="description" name="description" rows="4" placeholder="Describe what this option includes..." required
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200 shadow-sm placeholder-gray-400 resize-none"></textarea>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="pt-2">
-                                <button type="submit" class="w-full bg-gray-800 text-white font-medium py-2.5 px-4 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 shadow-sm transition-all duration-200 flex justify-center items-center">
-                                    <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                    </svg>
-                                    Create Option
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+            <!-- Header & Toolbar Section -->
+            <div class="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <!-- Page Title -->
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Options</h1>
                 </div>
 
-                <!-- Right Column: Listings (Takes up 8 columns on large screens) -->
-                <div class="lg:col-span-8">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-bold text-gray-900">Available Options</h2>
+                <!-- Controls & Actions -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+                    
+                    <!-- Search Bar Form -->
+                    <form method="GET" action="{{ url()->current() }}" class="relative w-full sm:w-80">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search options..."
+                            class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 bg-[#FFFFFF] text-[#000000] placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-[#4FC1FF]/20 focus:border-[#4FC1FF] transition-all duration-300 shadow-sm" />
+                    </form>
 
-                        <!-- Optional Filter/Sort -->
-                        <div class="flex space-x-2">
-                            <select class="border-gray-300 rounded-md text-sm pl-3 pr-8 py-2 border shadow-sm focus:ring-blue-500 focus:border-blue-500 outline-none bg-white">
-                                <option>Latest First</option>
-                                <option>Alphabetical</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Cards Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                        <!-- Card 1 -->
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80" alt="Dedicated Desk" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-xs font-semibold text-gray-800 shadow-sm">Active</div>
-                            </div>
-                            <div class="p-5 flex-1 flex flex-col">
-                                <h3 class="text-lg font-bold text-gray-900 mb-2">Dedicated Desk</h3>
-                                <p class="text-gray-600 text-sm flex-1 mb-4 line-clamp-3">A personal, permanent desk in a shared workspace environment. Includes an ergonomic chair, lockable filing cabinet, and 24/7 access to the building amenities.</p>
-
-                                <!-- Card Actions -->
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                    <span class="text-xs text-gray-400">Added 2 days ago</span>
-                                    <div class="flex space-x-2">
-                                        <button class="p-1.5 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-md transition-colors" title="Edit">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                        </button>
-                                        <button class="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors" title="Delete">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2 -->
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Private Meeting Room" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-xs font-semibold text-gray-800 shadow-sm">Active</div>
-                            </div>
-                            <div class="p-5 flex-1 flex flex-col">
-                                <h3 class="text-lg font-bold text-gray-900 mb-2">Private Meeting Room</h3>
-                                <p class="text-gray-600 text-sm flex-1 mb-4 line-clamp-3">Soundproof room for up to 8 people. Equipped with a 4K presentation screen, whiteboard walls, and video conferencing hardware. Perfect for team offsites.</p>
-
-                                <!-- Card Actions -->
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                    <span class="text-xs text-gray-400">Added 1 week ago</span>
-                                    <div class="flex space-x-2">
-                                        <button class="p-1.5 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-md transition-colors" title="Edit">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                        </button>
-                                        <button class="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors" title="Delete">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3 -->
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=800&q=80" alt="Hot Desk Pass" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute top-3 right-3 bg-red-100 text-red-700 backdrop-blur-sm px-2.5 py-1 rounded-md text-xs font-semibold shadow-sm">Draft</div>
-                            </div>
-                            <div class="p-5 flex-1 flex flex-col">
-                                <h3 class="text-lg font-bold text-gray-900 mb-2">Hot Desk Pass</h3>
-                                <p class="text-gray-600 text-sm flex-1 mb-4 line-clamp-3">Flexible seating in our open-plan lounge areas. Just bring your laptop, pick any available seat, and start working. Includes complimentary artisan coffee.</p>
-
-                                <!-- Card Actions -->
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                    <span class="text-xs text-gray-400">Added 2 weeks ago</span>
-                                    <div class="flex space-x-2">
-                                        <button class="p-1.5 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-md transition-colors" title="Edit">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                        </button>
-                                        <button class="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors" title="Delete">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    <!-- Add New Option Button -->
+                    <a href="{{ route('options.create') }}">
+                        <button type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-6 py-3 text-sm font-semibold text-[#FFFFFF] shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:bg-opacity-90 focus:outline-none focus:ring-4 focus:ring-[#FF6245]/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add New Option
+                        </button>
+                    </a>
                 </div>
-
             </div>
+
+            <!-- Cards Grid Layout -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                @foreach ($options as $option)
+                    <!-- Dynamic Card -->
+                    <div class="bg-[#FFFFFF] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden relative group border border-gray-100">
+                        <!-- Status Badge -->
+                        <div class="absolute top-4 right-4 z-10">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-[#4FC1FF]/15 text-[#4FC1FF] border border-[#4FC1FF]/20 backdrop-blur-sm shadow-sm">
+                               @if ($option->is_active)
+                                    Active
+                                @else
+                                    Inactive
+                                @endif
+                            </span>
+                        </div>
+                        <!-- Image Area -->
+                        <div class="h-48 relative overflow-hidden bg-gray-100">
+                            <!-- Ensure you load your actual dynamic image here if applicable -->
+                            <img src="{{ $option->cover_image ? asset('storage/' . $option->cover_image) : '' }}" alt="{{ $option->name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                        </div>
+                        <!-- Content -->
+                        <div class="p-5 flex-1 flex flex-col">
+                            <h3 class="text-lg font-bold text-[#000000] mb-2 leading-tight group-hover:text-[#4FC1FF] transition-colors duration-300">{{ $option->name ?? 'Dedicated Desk' }}</h3>
+                            <p class="text-gray-500 text-sm flex-1 mb-4 line-clamp-3">{{ $option->description }}</p>
+
+                            <!-- Card Footer & Actions -->
+                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                                <span class="text-xs font-medium text-gray-400">Added {{ $option->created_at->diffForHumans() }}</span>
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-2 text-[#4FC1FF] bg-[#4FC1FF]/10 hover:bg-[#4FC1FF] hover:text-[#FFFFFF] rounded-lg transition-all duration-300 shadow-sm" title="Edit">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                    </button>
+                                    <button class="p-2 text-[#FF6245] bg-[#FF6245]/10 hover:bg-[#FF6245] hover:text-[#FFFFFF] rounded-lg transition-all duration-300 shadow-sm" title="Delete">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Pagination Footer -->
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#FFFFFF] px-6 py-4 rounded-2xl shadow-sm border border-gray-100">
+                <p class="text-sm text-gray-500 font-medium">
+                    Showing <span class="text-[#000000]">{{ $options->firstItem() ?? 0 }}-{{ $options->lastItem() ?? 0 }}</span> of <span class="text-[#000000]">{{ $options->total() }}</span> options
+                </p>
+
+                <nav aria-label="Pagination" class="inline-flex items-center gap-2">
+                    
+                    <!-- Previous Button -->
+                    @if($options->onFirstPage())
+                        <button type="button" disabled class="inline-flex items-center rounded-lg border border-gray-200 bg-[#FFFFFF] px-4 py-2 text-sm font-medium text-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-[#4FC1FF]/20 shadow-sm opacity-50 cursor-not-allowed">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            Prev
+                        </button>
+                    @else
+                        <a href="{{ $options->previousPageUrl() }}" class="inline-flex items-center rounded-lg border border-gray-200 bg-[#FFFFFF] px-4 py-2 text-sm font-medium text-gray-500 transition-all hover:border-[#4FC1FF] hover:text-[#4FC1FF] focus:outline-none focus:ring-2 focus:ring-[#4FC1FF]/20 shadow-sm">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            Prev
+                        </a>
+                    @endif
+
+                    <!-- STRICT 4-PAGE SLIDING WINDOW -->
+                    <div class="hidden sm:flex items-center gap-1">
+                        @php
+                            $currentPage = $options->currentPage();
+                            $lastPage = $options->lastPage();
+                            $window = 4;
+                            
+                            // Math to ensure window is strictly 4 items and slides based on current page
+                            $start = max(1, $currentPage - 1);
+                            $end = $start + $window - 1; // Exactly 4 pages total
+                            
+                            // If calculating forward puts us past the last page, pull backwards
+                            if ($end > $lastPage) {
+                                $end = max(1, $lastPage);
+                                $start = max(1, $end - $window + 1);
+                            }
+                        @endphp
+
+                        @for ($i = $start; $i <= $end; $i++)
+                            @if ($i == $currentPage)
+                                <!-- Active Page -->
+                                <span aria-current="page" class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#FF6245] text-sm font-bold text-[#FFFFFF] shadow-md transition-all hover:bg-opacity-90 cursor-default">
+                                    {{ $i }}
+                                </span>
+                            @else
+                                <!-- Inactive Page Link -->
+                                <a href="{{ $options->url($i) }}" class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-transparent bg-transparent text-sm font-medium text-gray-600 transition-all hover:bg-gray-50 hover:text-[#000000]">
+                                    {{ $i }}
+                                </a>
+                            @endif
+                        @endfor
+                    </div>
+
+                    <!-- Next Button -->
+                    @if($options->hasMorePages())
+                        <a href="{{ $options->nextPageUrl() }}" class="inline-flex items-center rounded-lg border border-gray-200 bg-[#FFFFFF] px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:border-[#4FC1FF] hover:text-[#4FC1FF] focus:outline-none focus:ring-2 focus:ring-[#4FC1FF]/20 shadow-sm">
+                            Next
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </a>
+                    @else
+                        <button type="button" disabled class="inline-flex items-center rounded-lg border border-gray-200 bg-[#FFFFFF] px-4 py-2 text-sm font-medium text-gray-700 transition-all focus:outline-none focus:ring-2 focus:ring-[#4FC1FF]/20 shadow-sm opacity-50 cursor-not-allowed">
+                            Next
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    @endif
+                </nav>
+            </div>
+
         </main>
     </div>
 </x-main-layout>
