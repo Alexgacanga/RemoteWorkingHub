@@ -25,7 +25,7 @@ class OptionController extends Controller
             });
         }
 
-        $options = $query->paginate(10)->withQueryString();
+        $options = $query->latest()->paginate(8)->withQueryString();
 
         return view('admin.options', [
             'options' => $options 

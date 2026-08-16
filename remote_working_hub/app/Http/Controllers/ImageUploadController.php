@@ -43,7 +43,6 @@ class ImageUploadController extends Controller
 
         return response()->json(['error' => 'File upload failed'], 400);
     }
-    }
 
     /**
      * Display the specified resource.
