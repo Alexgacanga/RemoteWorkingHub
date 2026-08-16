@@ -1,5 +1,5 @@
 <x-main-layout>
-    <div class="min-h-screen bg-whit w-full" style="font-size: 14px; font-family: 'Poppins', sans-serif;">
+    <div class="min-h-screen bg-white w-full" style="font-size: 14px; font-family: 'Poppins', sans-serif;">
         <!-- Main Container -->
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 xl:py-10 2xl:py-12 flex flex-col gap-8">
 

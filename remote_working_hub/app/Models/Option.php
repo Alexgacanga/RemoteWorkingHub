@@ -8,12 +8,9 @@ class Option extends Model
 {
     protected $fillable = [
         'name',
-        'picture',
+        'cover_image',
         'description',
         'is_active'
-    ];
-    protected $casts = [
-        'is_active' => 'boolean'
     ];
 
     public function packages(){

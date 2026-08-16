@@ -12,22 +12,35 @@ class OptionController extends Controller
         protected OptionService $optionService,
     )
     {}
-    public function index()
+    public function index(Request $request)
     {
-        $option = $this->optionService->all();
-        return view('admin.options', compact('option'));
+        $query = Option::query();
+
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+            
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', $searchTerm)
+                  ->orWhere('description', 'LIKE', $searchTerm);
+            });
+        }
+
+        $options = $query->latest()->paginate(8)->withQueryString();
+
+        return view('admin.options', [
+            'options' => $options 
+        ]);
     }
 
     public function create()
     {
-        return view('admins.options.create');
+        return view('pages.add-option');
     }
     public function store(Request $request)
-    {   $data = $request->validate([
-         'name' => 'required|string|max:255'
-            ]);
-        $this->optionService->create($data);
-        return redirect('admin.options');
+    {   
+        $this->optionService->store($request);
+        return redirect()->route('options.index')->with('success', 'Option created successfully.');
+
     }
     public function show(string $id)
     {

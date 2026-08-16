@@ -12,15 +12,31 @@ class CustomerController extends Controller
         protected CustomerService $customerService
     )
     {}
-    public function index()
+
+public function index(Request $request)
     {
-        $customer = $this->customerService->all();
-        return view('admin.customers', compact('customer'));
-    }
-    public function indexDashboard()
-    {
-        $customer = $this->customerService->all();
-        return view('dashboard', compact('customer'));
+        $query = Customer::query();
+
+        if ($request->filled('status') && strtolower($request->status) !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('fname', 'LIKE', $searchTerm)
+                  ->orWhere('lname', 'LIKE', $searchTerm)
+                  ->orWhere('email', 'LIKE', $searchTerm)
+                  ->orWhere('payment_id', 'LIKE', $searchTerm);
+            });
+        }
+
+        $customers = $query->latest()->paginate(10)->withQueryString();
+
+        return view('admin.customers', [
+            'customers' => $customers
+        ]);
     }
 
     /**
@@ -28,7 +44,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.add-customer');
     }
 
     /**
@@ -36,7 +52,9 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->customerService->store($request);
+
+        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
     }
 
     /**

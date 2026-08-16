@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use Illuminate\Http\Request;
 
 class CustomerService
 {
@@ -12,10 +13,10 @@ class CustomerService
     }
     public function generatePaymentId(): String{
         do{
-            $rand_no = random_int(1,999);
+            $rand_no = random_int(1,9999);
             $id =
-                now()->format('Ym')
-                . str_pad($rand_no, 3, '0', STR_PAD_LEFT);
+                now()->format('ym')
+                . str_pad($rand_no, 4, '0', STR_PAD_LEFT);
         }
         while(
             Customer::where('payment_id', $id)
@@ -23,12 +24,19 @@ class CustomerService
                 );
         return $id;
     }
-    public function create(Customer $customer): Customer{
-        $customer->payment_id = $this->generatePaymentId();
-        $customer->save();
-        return $customer->fresh();
-    }
-    public function all(){
-        return Customer::latest()->get();
+    public function store(Request $request){
+        $validated = $request->validate([
+            'fname' => 'required|string|max:255',
+            'lname' => 'string|max:255',
+            'email' => 'email',
+            'id_no' => 'string|nullable',
+            'phone_no' => 'string|nullable',
+            'status' => 'string'
+        ]);
+        Customer::create([
+            ...$validated,
+            'payment_id' => $this->generatePaymentId(),
+        ]);
+
     }
 }

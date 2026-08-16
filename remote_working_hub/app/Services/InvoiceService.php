@@ -13,9 +13,13 @@ use function Symfony\Component\Clock\now;
 class InvoiceService
 {
     public function __construct(
-        protected SubscriptionService $subscriptionService,
     )
     {}
+    public function all(){
+        return Invoice::with('subscription')
+            ->latest()
+            ->get();
+    }
     private function generateInvoiceNumber(): string{
         $date = now()->format('Ymd');
         $lastInvoiceNumber = LastNumber::where('doc_type', 'invoice')->value('last_number');

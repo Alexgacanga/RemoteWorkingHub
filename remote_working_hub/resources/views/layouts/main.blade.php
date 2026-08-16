@@ -22,7 +22,7 @@
                         class="group relative flex h-10 w-10 items-center justify-center rounded-xl bg-[#000000] text-lg font-bold text-white shadow-sm transition-all duration-300 ease-in-out">
                         <span class="relative z-10">R</span>
                         <span
-                            class="pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible">
+                            class="pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100">
                             Remote Working<br>Hub
                         </span>
                     </div>
@@ -44,7 +44,8 @@
             </button>
         </div>
 
-        <nav class="flex-1 space-y-2 px-3 py-4">
+
+        <nav id="sidebarNav" class="flex-1 space-y-1 overflow-y-auto overflow-x-hidden px-3 py-4">
             <div
                 class="nav-section-title px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-400 transition-all duration-300 ease-in-out">
                 Dashboard</div>
@@ -58,10 +59,10 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Payments</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Payments</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Payments</span>
             </a>
 
-            <a href="#"
+            <a href="{{ route('subscriptions.index') }}"
                 class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -70,10 +71,10 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Subscriptions</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Subscriptions</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Subscriptions</span>
             </a>
 
-            <a href="#"
+            <a href="{{ route('invoices.index') }}"
                 class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -82,7 +83,7 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Invoices</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Invoices</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Invoices</span>
             </a>
 
             <a href="#"
@@ -94,7 +95,7 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Sales</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Sales</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Sales</span>
             </a>
 
             <a href="#"
@@ -106,7 +107,7 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Revenue</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Revenue</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Revenue</span>
             </a>
 
             <div
@@ -122,7 +123,7 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Customers</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Customers</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Customers</span>
             </a>
 
             <a href="{{ route('packages.index') }}"
@@ -134,7 +135,7 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Packages</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Packages</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Packages</span>
             </a>
 
             <a href="{{ route('roles.index') }}"
@@ -146,7 +147,7 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Roles</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Roles</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Roles</span>
             </a>
 
             <a href="{{ route('users.index') }}"
@@ -158,20 +159,41 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">System Users</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">System
-                    Users</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">System Users</span>
             </a>
 
             <a href="#"
                 class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+</svg>
+
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Expenses</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Expenses</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Expenses</span>
+            </a>
+
+            <a href="#"
+                class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12l2-1 2 1 2-1 2 1 2-1 2 1V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9h6m-6-4h6" />
+</svg>
+
+                <span class="nav-label truncate transition-all duration-300 ease-in-out">Receipts</span>
+                <span
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Receipts</span>
+            </a>
+            <a href="{{ route('options.index') }}"
+                class="nav-item group relative flex items-center gap-3 rounded-xl border-l-2 border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#4FC1FF] hover:bg-[#4FC1FF]/10 hover:text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+</svg>
+
+
+
+                <span class="nav-label truncate transition-all duration-300 ease-in-out">Space options</span>
+                <span
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Space options</span>
             </a>
 
             <a href="#"
@@ -184,7 +206,7 @@
                 </svg>
                 <span class="nav-label truncate transition-all duration-300 ease-in-out">Settings</span>
                 <span
-                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:visible hidden md:block">Settings</span>
+                    class="tooltip-label pointer-events-none absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 -translate-x-2 invisible whitespace-nowrap rounded-lg bg-[#000000] px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 hidden md:block">Settings</span>
             </a>
         </nav>
 
@@ -234,15 +256,17 @@
                         </svg>
                         Profile
                     </button>
-                    <button type="button"
-                        class="flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-medium text-gray-700 transition hover:bg-[#FF6245]/10 hover:text-black">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h3a3 3 0 013 3v1" />
-                        </svg>
-                        Logout
-                    </button>
+                    <a href="{{ route('logout') }}">
+                        <button type="button"
+                            class="flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-medium text-gray-700 transition hover:bg-[#FF6245]/10 hover:text-black">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h3a3 3 0 013 3v1" />
+                            </svg>
+                            Logout
+                        </button>
+                    </a>
                 </div>
             </div>
         </header>
@@ -255,6 +279,7 @@
 
 <script>
     const sidebar = document.getElementById('sidebar');
+    const sidebarNav = document.getElementById('sidebarNav');
     const desktopSidebarToggle = document.getElementById('desktopSidebarToggle');
     const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
     const mobileOverlay = document.getElementById('mobileOverlay');
@@ -284,6 +309,11 @@
             sidebarChevron.classList.add('rotate-180');
             navLabels.forEach((label) => label.classList.add('hidden'));
             navSections.forEach((section) => section.classList.add('hidden'));
+
+            // Remove overflow to allow tooltips to show outside the container
+            sidebarNav.classList.remove('overflow-y-auto', 'overflow-x-hidden');
+            sidebarNav.classList.add('overflow-visible');
+
             document.querySelectorAll('.nav-item .tooltip-label').forEach((tooltip) => {
                 tooltip.classList.remove('hidden');
                 tooltip.classList.add('md:block');
@@ -295,6 +325,11 @@
             sidebarChevron.classList.remove('rotate-180');
             navLabels.forEach((label) => label.classList.remove('hidden'));
             navSections.forEach((section) => section.classList.remove('hidden'));
+
+            // Restore overflow for regular scrolling
+            sidebarNav.classList.add('overflow-y-auto', 'overflow-x-hidden');
+            sidebarNav.classList.remove('overflow-visible');
+
             document.querySelectorAll('.nav-item .tooltip-label').forEach((tooltip) => {
                 tooltip.classList.add('hidden');
                 tooltip.classList.remove('md:block');
@@ -353,5 +388,6 @@
 
     setCollapsedState(false);
 </script>
+
 </body>
 </html>
