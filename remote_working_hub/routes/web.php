@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('pay')->group(function (){
+Route::prefix('pay')->group(function () {
     Route::post('/confirmation', [MpesaController::class, 'comfirmation'])->name('pay.confirmation');
     Route::post('/validation', [MpesaController::class, 'validation'])->name('pay.validation');
     Route::get('/register', [MpesaController::class, 'registerUrls'])->name('pay.registerUrls');
@@ -56,12 +56,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/options/create', [OptionController::class, 'create'])->name('options.create');
     Route::post('/options', [OptionController::class, 'store'])->name('options.store');
     Route::post('/upload-image', [ImageUploadController::class, 'store'])->name('upload.image');
+    Route::get('options/{id}/edit', [OptionController::class, 'edit'])->name('options.edit');
+    Route::delete('options/{id}/delete', [OptionController::class, 'destroy'])->name('options.destroy');
+    Route::patch('options/{id}', [OptionController::class, 'update'])->name('options.update');
 
     Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'createIndex'])->name('users.create');
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

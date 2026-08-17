@@ -1,5 +1,5 @@
 <x-main-layout>
-    <div class="min-h-screen bg-white flex flex-col w-full" style="font-family: 'Poppins', sans-serif;">
+    <div class="bg-white flex flex-col w-full" style="font-family: 'Poppins', sans-serif;">
         <!-- Main Workspace -->
         <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 
@@ -12,7 +12,7 @@
 
                 <!-- Controls & Actions -->
                 <div class="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
-                    
+
                     <!-- Search Bar Form -->
                     <form method="GET" action="{{ url()->current() }}" class="relative w-full sm:w-80">
                         <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -41,7 +41,7 @@
                     <div class="bg-[#FFFFFF] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden relative group border border-gray-100">
                         <!-- Status Badge -->
                         <div class="absolute top-4 right-4 z-10">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-[#4FC1FF]/15 text-[#4FC1FF] border border-[#4FC1FF]/20 backdrop-blur-sm shadow-sm">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-[#4FC1FF]/15 text-red-900 border border-[#4FC1FF]/20 backdrop-blur-sm shadow-sm">
                                @if ($option->is_active)
                                     Active
                                 @else
@@ -64,12 +64,20 @@
                             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                                 <span class="text-xs font-medium text-gray-400">Added {{ $option->created_at->diffForHumans() }}</span>
                                 <div class="flex items-center space-x-2">
-                                    <button class="p-2 text-[#4FC1FF] bg-[#4FC1FF]/10 hover:bg-[#4FC1FF] hover:text-[#FFFFFF] rounded-lg transition-all duration-300 shadow-sm" title="Edit">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                    </button>
-                                    <button class="p-2 text-[#FF6245] bg-[#FF6245]/10 hover:bg-[#FF6245] hover:text-[#FFFFFF] rounded-lg transition-all duration-300 shadow-sm" title="Delete">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                    </button>
+                                    <a href="{{ route('options.edit', $option->id) }}">
+                                        <button class="p-2 text-[#4FC1FF] bg-[#4FC1FF]/10 hover:bg-[#4FC1FF] hover:text-[#FFFFFF] rounded-lg transition-all duration-300 shadow-sm" title="Edit">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                        </button>
+                                    </a>
+                                    <form action="{{ route('options.destroy', $option->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this option?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a>
+                                            <button class="p-2 text-[#FF6245] bg-[#FF6245]/10 hover:bg-[#FF6245] hover:text-[#FFFFFF] rounded-lg transition-all duration-300 shadow-sm" title="Delete">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                            </button>
+                                        </a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +92,7 @@
                 </p>
 
                 <nav aria-label="Pagination" class="inline-flex items-center gap-2">
-                    
+
                     <!-- Previous Button -->
                     @if($options->onFirstPage())
                         <button type="button" disabled class="inline-flex items-center rounded-lg border border-gray-200 bg-[#FFFFFF] px-4 py-2 text-sm font-medium text-gray-500 transition-all focus:outline-none focus:ring-2 focus:ring-[#4FC1FF]/20 shadow-sm opacity-50 cursor-not-allowed">
@@ -104,11 +112,11 @@
                             $currentPage = $options->currentPage();
                             $lastPage = $options->lastPage();
                             $window = 4;
-                            
+
                             // Math to ensure window is strictly 4 items and slides based on current page
                             $start = max(1, $currentPage - 1);
                             $end = $start + $window - 1; // Exactly 4 pages total
-                            
+
                             // If calculating forward puts us past the last page, pull backwards
                             if ($end > $lastPage) {
                                 $end = max(1, $lastPage);
