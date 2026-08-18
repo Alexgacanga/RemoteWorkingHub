@@ -1,5 +1,5 @@
 <x-main-layout>
-    <div class="bg-white flex flex-col w-full" style="font-family: 'Poppins', sans-serif;">
+    <div class="bg-white min-h-screen flex flex-col w-full" style="font-family: 'Poppins', sans-serif;">
         <!-- Main Workspace -->
         <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 

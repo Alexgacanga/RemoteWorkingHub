@@ -17,14 +17,12 @@ class OptionController extends Controller
         $query = Option::query();
 
         if ($request->filled('search')) {
-            $searchTerm = '%' . $request->search . '%';
-
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('name', 'LIKE', $searchTerm)
-                    ->orWhere('description', 'LIKE', $searchTerm);
-            });
-        }
-
+        $searchTerm = '%' . $request->search . '%';
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('name', 'LIKE', $searchTerm)
+              ->orWhere('description', 'LIKE', $searchTerm);
+        });
+    }
         $options = $query->latest()->paginate(8)->withQueryString();
 
         return view('admin.options', [
@@ -39,7 +37,7 @@ class OptionController extends Controller
     public function store(Request $request)
     {
         $this->optionService->store($request);
-        return redirect()->route('options.index')->with('success', 'Option created successfully.');
+        return redirect()->route('options.index');
     }
     public function show(string $id)
     {

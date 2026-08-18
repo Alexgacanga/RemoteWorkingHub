@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::patch('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/customers/{id}/delete', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
     // PAYMENTS
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
@@ -60,8 +63,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('options/{id}/delete', [OptionController::class, 'destroy'])->name('options.destroy');
     Route::patch('options/{id}', [OptionController::class, 'update'])->name('options.update');
 
+    // PACKAGES
     Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
+    Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
+    Route::post('/packages', [PackageController::class, 'store'])->name('packages.store');
+    Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('packages.edit');
+    Route::patch('/packages/{id}', [PackageController::class, 'update'])->name('packages.update');
+    Route::delete('/packages/{id}/delete', [PackageController::class, 'destroy'])->name('packages.destroy');
 
+    // USERS
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'createIndex'])->name('users.create');
 });

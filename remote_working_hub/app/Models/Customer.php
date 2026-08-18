@@ -24,4 +24,7 @@ class Customer extends Model
     public function receipts(){
         return $this->hasMany(Receipt::class);
     }
+    public function package(){
+        return $this->hasOne(Package::class);
+    }
 }

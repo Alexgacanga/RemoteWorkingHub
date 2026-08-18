@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Option;
 use App\Models\Package;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Ramsey\Collection\Collection;
 
@@ -13,10 +15,11 @@ class PackageService
     {
         //
     }
-    public function all(): Collection{
+    public function index(): Collection{
         return Package::with('option')
-        ->orderBy('name')
-        ->get();
+        ->withCount('users')
+        ->latest()
+        ->all();
     }
     public function is_active(): Collection{
         return Package::where('is_active',true)
@@ -40,6 +43,20 @@ class PackageService
         $package->update([
             'is_active' => false
         ]);
+    }
+    public function find(string $id): Package{
+        return Package::findOrFail($id);
+    }
+    public function store(Request $request){
+        $validated = $request->validate([
+            'name' => 'string|required|max:255',
+            'description' => 'required|string',
+            'is_active' => 'boolean|required',
+            'price' => 'required',
+            'time_options' => 'string|required|in:day,week,month',
+            'option_id' => 'required|exists:options,id'
+        ]);
+        Package::create($validated);
     }
 
     public function delete(Package $package): void{

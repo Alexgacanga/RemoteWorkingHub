@@ -12,7 +12,7 @@ class Package extends Model
     'price',
     'time_options',
     'is_active',
-    'options'
+    'option_id'
 ];
     protected $casts = [
         'is_active' => 'boolean',
@@ -27,5 +27,8 @@ class Package extends Model
     }
     public function subscriptions(){
         return $this->hasMany(Subscription::class);
+    }
+    public function customers(){
+        return $this->hasMany(Customer::class);
     }
 }

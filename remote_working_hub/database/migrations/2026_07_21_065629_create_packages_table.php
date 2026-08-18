@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('price', $total = 8, $places=2);
             $table->enum('time_options', ['day', 'week', 'month']);
             $table->boolean('is_active')->default(true);
-            $table->integer('days_duration')->unsigned()->default(1);
             $table->foreignId('option_id')->constrained()->cascadeOnDelete();
         });
     }

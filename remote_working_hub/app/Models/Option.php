@@ -10,7 +10,7 @@ class Option extends Model
         'name',
         'cover_image',
         'description',
-        'is_active'
+        'is_active',
     ];
 
     public function packages(){
