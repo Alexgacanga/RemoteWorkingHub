@@ -5,7 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
-{   // FILLABLES TO BE ADDED LATER
+{
+
+    protected $fillable = [
+        'start_date',
+        'end_date',
+        'customer_id',
+        'package_id',
+        'status',
+        'no_of_days'
+    ];
+
     public function customer(){
         return $this->belongsTo(Customer::class);
     }

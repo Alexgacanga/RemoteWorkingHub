@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Option;
 use App\Models\Package;
+use App\Models\Subscription;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
 
@@ -32,13 +33,12 @@ public function __construct(
         $query->where('time_options', $request->time_options);
     }
 
-        $packages = $query->withCount('customers')->latest()->paginate(4)->withQueryString();
-
+        $packages = $query->orderByRaw("CASE WHEN is_active = 1 THEN 0 ELSE 1 END")->latest()->paginate(4)->withQueryString();
         return view('admin.packages', [
-            'packages' => $packages
+            'packages' => $packages,
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */

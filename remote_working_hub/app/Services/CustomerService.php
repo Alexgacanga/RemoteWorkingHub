@@ -24,6 +24,9 @@ class CustomerService
                 );
         return $id;
     }
+    public function find(string $id): Customer{
+        return Customer::findOrFail($id);
+    }
     public function store(Request $request){
         $validated = $request->validate([
             'fname' => 'required|string|max:255',

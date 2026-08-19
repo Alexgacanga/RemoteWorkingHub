@@ -47,6 +47,12 @@ Route::middleware('auth')->group(function () {
 
     // SUBSCRIPTIONS
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
+    Route::get('/subscriptions/{id}/create-day-pass', [SubscriptionController::class, 'createDayPass'])->name('day-pass-subscriptions.create');
+    Route::post('/subscriptions/create-day-pass/{customerId}', [SubscriptionController::class, 'storeDayPass'])->name('day-pass-subscriptions.store');
+    Route::get('/subscriptions/{id}/create-weekly', [SubscriptionController::class, 'createWeekly'])->name('weekly-subscriptions.create');
+    Route::post('/subscriptions/create-weekly//{customerId}', [SubscriptionController::class, 'storeWeekly'])->name('weekly-subscriptions.store');
+    Route::get('/subscriptions/{id}/create-monthly', [SubscriptionController::class, 'createMonthly'])->name('monthly-subscriptions.create');
+    Route::post('/subscriptions/create-monthly//{customerId}', [SubscriptionController::class, 'storeMonthly'])->name('monthly-subscriptions.store');
 
     // ROLES
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');

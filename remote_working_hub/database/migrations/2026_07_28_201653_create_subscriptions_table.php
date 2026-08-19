@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('package_id')->constrained()->onDelete('restrict');
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('no_of_days')->nullable();
             $table->enum('status', ['pending', 'active', 'expired', 'cancelled'])->default('pending');
         });
     }

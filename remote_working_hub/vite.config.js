@@ -8,7 +8,9 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/add-option.js',
-                'resources/js/edit-option.js'
+                'resources/js/edit-option.js',
+                'resources/js/add-subscription.js',
+                'resources/js/customer.js'
             ],
             refresh: true,
         }),

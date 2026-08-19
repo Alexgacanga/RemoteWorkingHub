@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Option;
 use App\Models\Package;
+use App\Models\Subscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -63,19 +64,19 @@ class PackageService
         // CHECK IF THERE ARE ACTIVE SUBSCRIPTIONS ALREADY
         if ($package->subscriptions()->exists()){
             throw ValidationException::withMessages([
-                'package' => 'Package has subscriptions.'
+                'package' => 'Package already has subscriptions!'
             ]);
         }
         $package->delete();
     }
-    public function calculateEndDate(Package $package, Carbon $startDate): Carbon{
+    public function calculateEndDate(Package $package, ?int $no_of_days, Carbon $startDate): Carbon{
         return match($package->time_options){
             'day' => $startDate
                 ->copy()
-                ->addDays($package->days_duration),
+                ->addDays($no_of_days - 1),
             'week' => $startDate
                 ->copy()
-                ->addDays(7),
+                ->addDays(6),
             'month' => $startDate
                 ->copy()
                 ->addMonths(1),

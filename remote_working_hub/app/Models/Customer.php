@@ -12,7 +12,8 @@ class Customer extends Model
         'email',
         'phone_no',
         'id_no',
-        'payment_id'
+        'payment_id',
+        'package_id'
     ];
 
     public function subscriptions(){
@@ -23,8 +24,5 @@ class Customer extends Model
     }
     public function receipts(){
         return $this->hasMany(Receipt::class);
-    }
-    public function package(){
-        return $this->hasOne(Package::class);
     }
 }

@@ -28,7 +28,4 @@ class Package extends Model
     public function subscriptions(){
         return $this->hasMany(Subscription::class);
     }
-    public function customers(){
-        return $this->hasMany(Customer::class);
-    }
 }

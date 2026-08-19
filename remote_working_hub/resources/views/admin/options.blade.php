@@ -33,7 +33,21 @@
                     </a>
                 </div>
             </div>
-
+@if ($errors->any())
+                <div class="mb-8 p-4 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3 transition-all duration-300 shadow-sm">
+                    <svg class="h-5 w-5 text-red-500 mt-0.5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-sm font-semibold text-red-800">Action Failed</h3>
+                        <ul class="mt-1 text-sm text-red-600 list-disc list-inside">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
             <!-- Cards Grid Layout -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @foreach ($options as $option)
@@ -59,7 +73,6 @@
                         <div class="p-5 flex-1 flex flex-col">
                             <h3 class="text-lg font-bold text-[#000000] mb-2 leading-tight group-hover:text-[#4FC1FF] transition-colors duration-300">{{ $option->name ?? 'Dedicated Desk' }}</h3>
                             <p class="text-gray-500 text-sm flex-1 mb-4 line-clamp-3">{{ $option->description }}</p>
-
                             <!-- Card Footer & Actions -->
                             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                                 <span class="text-xs font-medium text-gray-400">Added {{ $option->created_at->diffForHumans() }}</span>
