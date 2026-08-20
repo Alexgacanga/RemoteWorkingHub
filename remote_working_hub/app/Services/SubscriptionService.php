@@ -91,7 +91,7 @@ class SubscriptionService
                 'no_of_days' => $no_of_days,
                 'status' => 'pending',
             ]);
-            // $this->invoiceService->createInvoice($subscription);
+            $this->invoiceService->createInvoice($subscription);
             return $subscription;
         });
     }

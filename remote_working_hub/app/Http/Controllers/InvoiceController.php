@@ -12,9 +12,9 @@ class InvoiceController extends Controller
     )
     {}
     public function index()
-    {   
-        $invoice = $this->invoiceService->all();
-        return view('admin.invoices', compact('invoice'));
+    {
+        $invoices = $this->invoiceService->all();
+        return view('admin.invoices', compact('invoices'));
     }
 
     /**

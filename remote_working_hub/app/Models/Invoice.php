@@ -5,7 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
-{   // FILLABLES TO BE ADDED LATER
+{
+    protected $fillable = [
+        'due_date',
+        'subscription_id',
+        'customer_id',
+        'total_amount',
+        'status',
+        'balance_amount',
+        'paid_amount',
+        'total_amount',
+        'invoice_number'
+    ];
     public function subscription(){
         return $this->belongsTo(Subscription::class);
     }

@@ -11,12 +11,13 @@ use Illuminate\Http\Request;
 class SubscriptionController extends Controller
 {
     public function __construct(
-        protected SubscriptionService $subscriptionService
+        protected SubscriptionService $subscriptionService,
+        protected CustomerService $customerService,
     ) {}
     public function index()
     {
-        $subscription = $this->subscriptionService->all();
-        return view('admin.subscriptions', compact('subscription'));
+        $subscriptions = $this->subscriptionService->all();
+        return view('admin.subscriptions', compact('subscriptions'));
     }
 
     /**

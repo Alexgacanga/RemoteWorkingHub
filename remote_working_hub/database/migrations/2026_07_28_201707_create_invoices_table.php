@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('total_amount', $total = 8, $places = 2);
             $table->decimal('paid_amount', $total = 8, $places = 2);
             $table->decimal('balance_amount', $total = 8, $places = 2);
-            $table->date('due_date');
+            $table->date('due_date')->nullable();
             $table->enum('status', ['pending', 'paid', 'partially_paid', 'overdue', 'cancelled'])->default('pending');
         });
     }

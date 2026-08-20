@@ -97,28 +97,24 @@
                         <tbody class="divide-y divide-gray-100 bg-[#FFFFFF]">
 
                             <!-- Row -->
+                            @foreach ($subscriptions as $subscription)
                             <tr class="transition-all duration-300 hover:bg-gray-50 group">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#000000]">Alex</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-600">Mwangi</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">alex.m@example.com</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+254 712 345 678</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32145678</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#000000]">Daily Open Desk</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">Daily</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Aug 13, 2026</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Aug 14, 2026</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#000000]">{{ $subscription->customer->fname }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-600">{{ $subscription->customer->lname }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $subscription->customer->email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $subscription->customer->phone_no }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $subscription->customer->id_no }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#000000]">{{ $subscription->package->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">{{ $subscription->package->time_options }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $subscription->start_date }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $subscription->end_date }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full bg-[#4FC1FF]/20 text-[#000000] text-xs font-bold tracking-wide uppercase">
-                                        Active
+                                        {{ $subscription->status }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-4 text-right sticky right-0 bg-[#FFFFFF] group-hover:bg-gray-50 transition-colors z-10 border-l border-gray-100 shadow-[-4px_0_6px_-2px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:opacity-100">
-                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Create Invoice">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                                            </svg>
-                                        </button>
                                         <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]" title="Edit Subscription">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -132,6 +128,8 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>

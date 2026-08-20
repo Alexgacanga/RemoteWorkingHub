@@ -38,15 +38,25 @@ class InvoiceService
         $package = $subscription->package;
         return Invoice::create([
             'subscription_id' => $subscription->id,
+            'customer_id' => $subscription->customer->id,
             'invoice_number' => $this->generateInvoiceNumber(),
             'total_amount' => $package->price,
             'paid_amount' => 0,
             'balance_amount' => $package->price,
-            //TO BE ADJUSTED LATERWARDS ACCORDING TO TYPE OF SUBSCRIPTION
-            'due_date' => $subscription->start_date,
+            'due_date' => $this->dueDate($subscription) ?? null,
             'status' => 'pending',
 
         ]);
+    }
+    public function dueDate(Subscription $subscription){
+        if($subscription->package->time_options === 'month'){
+            $due_date = $subscription->start_date->addDays(10);
+            return $due_date;
+        }
+        if($subscription->package->time_options === 'week'){
+            $due_date = $subscription->start_date->addDays(2);
+            return $due_date;
+        }
     }
     public function cancelInvoice(Invoice $invoice): void{
         if ($invoice->status === ['overdue', 'partially_paid', 'paid']){
