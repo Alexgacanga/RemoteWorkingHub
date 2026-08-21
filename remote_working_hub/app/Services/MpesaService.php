@@ -22,7 +22,7 @@ class MpesaService
             config('mpesa.secret')
         )
         ->post(
-            'https://sandbox.safaricom.co.ke/mpesa/c2b/v2/registerurl',
+            'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
             [
                 "ShortCode" => config('mpesa.shortcode'),
                 "ResponseType" => 'Completed',
@@ -69,7 +69,7 @@ class MpesaService
             'fname' => $callback['fname'],
             'lname' => $callback['lname'],
             'status' => 'RECEIVED',
-            'payload' => $callback,
+            'payload' => json_encode($callback),
         ]);
     }
 }

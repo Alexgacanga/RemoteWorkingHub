@@ -131,7 +131,7 @@ class PaymentService
                 throw new Exception('Customer not found');
             }
             // GETS AMOUNT PAID
-            $total_amount_paid = (float) $callback['amount'];
+            $total_amount_paid = (float) $callback['transaction_amount'];
             // GETS INVOICES MATCHING THE GOTTEN CUSTOMER ID AND HAVE STATUS PENDING OR PARTIALLY PAID. GETS THE LATEST INVOICE
             $invoices = Invoice::query()
                 ->where('customer_id', $customer->id)
@@ -139,7 +139,7 @@ class PaymentService
                     'PENDING',
                     'PARTIALLY_PAID'
                 ])
-                ->orderBy('issued_at')
+                ->orderBy('created_at', 'desc')
                 ->lockForUpdate()
                 ->get();
             if($invoices->isEmpty()){
@@ -162,25 +162,27 @@ class PaymentService
                     $invoice->balance
                 );
                 // OBJECT CREATION AND ASSIGNING OF DATA
-                $payment = new Payment();
+                return Payment::create([
+                    'customer_id' => $customer->id,
+                    'invoice_id' => $invoice->id,
+                    'package_id' => $invoice->subscription->package_id,
+                    'amount' => $callback['transaction_amount'],
+                    'payment_method' => 'MPESA',
+                    'transaction_id' => $callback['transaction_id'],
+                    'phone_number' => $callback['phone_number'],
+                    'fname' => $callback['fname'],
+                    'lname' => $callback['lname'],
+                    'payment_date' => now(),
+                    'bill_reference' => $callback['bill_reference'],
+                    'user_id' => $invoice->subscription->customer->id ?? null
+                ]);
 
-                $payment->customer_id = $customer->id;
-                $payment->invoice_id = $invoice->id;
-                $payment->amount = $callback['transaction_amount'];
-                $payment->payment_method = 'MPESA';
-                $payment->transaction_id = $callback['transaction_id'];
-                $payment->phone_number = $callback['phone_number'];
-                $payment->fname = $callback['fname'];
-                $payment->lname = $callback['lname'];
-                $payment->paid_at = now();
-
-                $payment->save();
                 // CALCULATES ANY EXTRA AMOUNT PAID WHERE IF THE BALANCE WAS FULLY SETTLES FOR THE CURRENT INVOICE IT BECOMES ZERO
                 $extra_amount_paid = $total_amount_paid - $allocation;
 
-                $receipt = new Receipt();
-                $this->receiptService
-                    ->generate($receipt, $payment);
+                // $receipt = new Receipt();
+                // $this->receiptService
+                //     ->generate($receipt, $payment);
             }
         });
     }
