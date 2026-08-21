@@ -38,15 +38,25 @@ class InvoiceService
         $package = $subscription->package;
         return Invoice::create([
             'subscription_id' => $subscription->id,
+            'customer_id' => $subscription->customer->id,
             'invoice_number' => $this->generateInvoiceNumber(),
             'total_amount' => $package->price,
             'paid_amount' => 0,
             'balance_amount' => $package->price,
-            //TO BE ADJUSTED LATERWARDS ACCORDING TO TYPE OF SUBSCRIPTION
-            'due_date' => $subscription->start_date,
+            'due_date' => $this->dueDate($subscription) ?? null,
             'status' => 'pending',
 
         ]);
+    }
+    public function dueDate(Subscription $subscription){
+        if($subscription->package->time_options === 'month'){
+            $due_date = $subscription->start_date->addDays(10);
+            return $due_date;
+        }
+        if($subscription->package->time_options === 'week'){
+            $due_date = $subscription->start_date->addDays(2);
+            return $due_date;
+        }
     }
     public function cancelInvoice(Invoice $invoice): void{
         if ($invoice->status === ['overdue', 'partially_paid', 'paid']){
@@ -73,27 +83,29 @@ class InvoiceService
     public function updateTotals(Invoice $invoice): Invoice{
         $paid = $invoice->payments()->sum('amount');
         $balance = $invoice->total_amount - $paid;
+        $total = $invoice->total_amount;
         $invoice->update([
             'paid_amount' => $paid,
             'balance_amount' => $balance,
+            'total_amount' => $total
         ]);
-        $this->updateStatus($invoice, $balance);
+        $this->updateStatus($invoice, $balance, $total);
         return $invoice->fresh();
     }
-    public function updateStatus(Invoice $invoice, float $newBalance): void{
-        if($newBalance == 0){
+    public function updateStatus(Invoice $invoice, float $balance, float $total): void{
+        if($balance == 0){
             $invoice->update([
                 'status' => 'paid'
             ]);
             return;
         }
-        if($newBalance > 0){
+        if($balance > 0 && $balance < $total){
             $invoice->update([
                 'status' => 'partially_paid'
             ]);
             return;
         }
-        if($newBalance < 0){
+        if($balance < 0){
             $invoice->update([
                 'status' => 'overdue'
             ]);

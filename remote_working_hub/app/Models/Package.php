@@ -12,7 +12,7 @@ class Package extends Model
     'price',
     'time_options',
     'is_active',
-    'options'
+    'option_id'
 ];
     protected $casts = [
         'is_active' => 'boolean',

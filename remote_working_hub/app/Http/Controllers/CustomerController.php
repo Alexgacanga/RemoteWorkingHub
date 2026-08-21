@@ -69,18 +69,21 @@ public function index(Request $request)
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        //
+    {   $customer = $this->customerService->find($id);
+        return view('pages.edit-customer', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
+    {   try {
+        $this->customerService->update($request, $id);
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
+        }catch (\Exception $e) {
+        return redirect()->route('customers.index')->with('error', 'Failed to update customer. Please try again.');
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      */

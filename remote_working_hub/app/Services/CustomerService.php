@@ -24,6 +24,9 @@ class CustomerService
                 );
         return $id;
     }
+    public function find(string $id): Customer{
+        return Customer::findOrFail($id);
+    }
     public function store(Request $request){
         $validated = $request->validate([
             'fname' => 'required|string|max:255',
@@ -38,5 +41,17 @@ class CustomerService
             'payment_id' => $this->generatePaymentId(),
         ]);
 
+    }
+    public function update(Request $request, string $id){
+        $customer = $this->find($id);
+        $validated = $request->validate([
+            'fname' => 'required|string|max:255',
+            'lname' => 'string|max:255',
+            'email' => 'email',
+            'id_no' => 'string|nullable',
+            'phone_no' => 'string|nullable',
+            'status' => 'string'
+        ]);
+        $customer->update($validated);
     }
 }

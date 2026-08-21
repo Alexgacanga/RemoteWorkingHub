@@ -1,6 +1,28 @@
 <x-main-layout>
     <div class="min-h-screen bg-white" style="font-family: 'Poppins', sans-serif;">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  xl:py-10 2xl:py-12">
+            @if (session('success'))
+            <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-r-lg shadow-sm flex items-center justify-between" role="alert">
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span class="font-medium text-sm">{{ session('success') }}</span>
+                </div>
+            </div>
+        @endif
+
+        <!-- Error Alert Banner (if an exception/error occurs) -->
+        @if (session('error'))
+            <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg shadow-sm flex items-center justify-between" role="alert">
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 text-red-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span class="font-medium text-sm">{{ session('error') }}</span>
+                </div>
+            </div>
+        @endif
             <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Customers</h1>
@@ -18,7 +40,8 @@
                 </a>
             </div>
 
-            <div class="mb-6 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-3 lg:flex-row lg:items-center lg:justify-between">
+            <div
+                class="mb-6 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-3 lg:flex-row lg:items-center lg:justify-between">
 
                 {{-- SEARCH FORM --}}
                 <form method="GET" action="{{ route('customers.index') }}" class="relative block w-full max-w-lg">
@@ -35,12 +58,14 @@
                     </svg>
 
                     {{-- Search Input with value preservation --}}
-                    <input type="search" name="search" value="{{ request('search') }}" placeholder="Search customer..."
+                    <input type="search" name="search" value="{{ request('search') }}"
+                        placeholder="Search customer..."
                         class="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-black placeholder:text-gray-400 transition duration-200 focus:border-[#4FC1FF] focus:outline-none focus:ring-4 focus:ring-[#4FC1FF]/20">
                 </form>
 
                 {{-- FILTER BUTTONS --}}
-                <div class="inline-flex w-full max-w-xs items-center gap-1 rounded-xl border border-gray-200 bg-gray-50 p-1">
+                <div
+                    class="inline-flex w-full max-w-xs items-center gap-1 rounded-xl border border-gray-200 bg-gray-50 p-1">
                     @php
                         $selectedFilter = ucfirst(request('status', 'All'));
                     @endphp
@@ -56,10 +81,11 @@
                 </div>
             </div>
 
-            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md">
-                <div class="overflow-x-auto">
+            <div class="rounded-2xl border border-gray-200 bg-white shadow-md">
+                <div class="w-full">
                     <table class="min-w-full border-collapse">
-                        <thead class="bg-gray-50 text-left text-xs font-semibold uppercase tracking-[0.14em] text-gray-600">
+                        <thead
+                            class="bg-gray-50 text-left text-xs font-semibold uppercase tracking-[0.14em] text-gray-600">
                             <tr>
                                 <th scope="col" class="whitespace-nowrap px-4 py-3.5">Payment ID</th>
                                 <th scope="col" class="whitespace-nowrap px-4 py-3.5">First Name</th>
@@ -94,22 +120,65 @@
                                         {{ $customer->id_no }}
                                     </td>
                                     <td class="px-4 py-4">
-                                        <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold">
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold">
                                             {{ $customer->status }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right">
-                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:opacity-100">
-                                            <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]" title="Edit customer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </button>
-                                            <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Subscribe">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                                                </svg>
-                                            </button>
+                                        <div
+                                            class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:opacity-100">
+                                            <a href="{{ route('customers.edit', $customer->id) }}">
+                                                <button
+                                                    class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]"
+                                                    title="Edit customer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                </button>
+                                            </a>
+                                            <!-- Subscribe Dropdown Wrapper -->
+                                            <div class="relative group/dropdown">
+                                                <!-- Trigger Button -->
+                                                <button
+                                                    class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]"
+                                                    title="Subscribe">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                        stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 4v16m8-8H4" />
+                                                    </svg>
+                                                </button>
+
+                                                <!-- Dropdown Menu -->
+                                                <div
+                                                    class="absolute right-0 top-full z-50 mt-1 w-32 invisible translate-y-2 opacity-0 transition-all duration-300 group-hover/dropdown:visible group-hover/dropdown:translate-y-0 group-hover/dropdown:opacity-100">
+                                                    <div
+                                                        class="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-lg">
+                                                        <a href="{{ route('day-pass-subscriptions.create', $customer->id) }}">
+                                                            <button type="button"
+                                                                class="px-4 py-2 text-left text-sm font-medium text-gray-600 transition-colors hover:bg-[#FF6245]/10 hover:text-[#FF6245]">
+                                                                Day Pass
+                                                            </button>
+                                                        </a>
+                                                        <a href="{{ route('weekly-subscriptions.create', $customer->id) }}">
+                                                            <button type="button"
+                                                                class="px-4 py-2 text-left text-sm font-medium text-gray-600 transition-colors hover:bg-[#FF6245]/10 hover:text-[#FF6245]">
+                                                                Weekly
+                                                            </button>
+                                                        </a>
+                                                        <a href="{{ route('monthly-subscriptions.create', $customer->id) }}">
+                                                            <button type="button"
+                                                                class="px-4 py-2 text-left text-sm font-medium text-gray-600 transition-colors hover:bg-[#FF6245]/10 hover:text-[#FF6245]">
+                                                                Monthly
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -119,20 +188,24 @@
                 </div>
             </div>
 
-            <div class="mt-6 flex flex-col items-center justify-between gap-4 border-t border-gray-200 bg-white px-4 py-4 sm:flex-row">
+            <div
+                class="mt-6 flex flex-col items-center justify-between gap-4 border-t border-gray-200 bg-white px-4 py-4 sm:flex-row">
                 <p class="text-sm text-gray-500">
-                    Showing {{ $customers->firstItem() ?? 0 }}-{{ $customers->lastItem() ?? 0 }} of {{ $customers->total() }} customers
+                    Showing {{ $customers->firstItem() ?? 0 }}-{{ $customers->lastItem() ?? 0 }} of
+                    {{ $customers->total() }} customers
                 </p>
 
                 <nav aria-label="Pagination" class="inline-flex items-center gap-2">
 
                     {{-- Previous Button --}}
-                    @if($customers->onFirstPage())
-                        <a class="inline-flex btn-disabled opacity-50 cursor-not-allowed items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
+                    @if ($customers->onFirstPage())
+                        <a
+                            class="inline-flex btn-disabled opacity-50 cursor-not-allowed items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
                             Previous
                         </a>
                     @else
-                        <a href="{{ $customers->previousPageUrl() }}" class="inline-flex btn-active items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
+                        <a href="{{ $customers->previousPageUrl() }}"
+                            class="inline-flex btn-active items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
                             Previous
                         </a>
                     @endif
@@ -157,11 +230,13 @@
 
                         @for ($i = $start; $i <= $end; $i++)
                             @if ($i == $currentPage)
-                                <a aria-current="page" class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#FF6245] text-sm font-semibold text-white shadow-sm cursor-default">
+                                <a aria-current="page"
+                                    class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#FF6245] text-sm font-semibold text-white shadow-sm cursor-default">
                                     {{ $i }}
                                 </a>
                             @else
-                                <a href="{{ $customers->url($i) }}" class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9]">
+                                <a href="{{ $customers->url($i) }}"
+                                    class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9]">
                                     {{ $i }}
                                 </a>
                             @endif
@@ -169,12 +244,14 @@
                     </div>
 
                     {{-- Next Button --}}
-                    @if($customers->hasMorePages())
-                        <a href="{{ $customers->nextPageUrl() }}" class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
+                    @if ($customers->hasMorePages())
+                        <a href="{{ $customers->nextPageUrl() }}"
+                            class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-[#4FC1FF] hover:text-[#0A8FD9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
                             Next
                         </a>
                     @else
-                        <a class="inline-flex btn-disabled opacity-50 cursor-not-allowed items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
+                        <a
+                            class="inline-flex btn-disabled opacity-50 cursor-not-allowed items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4FC1FF]">
                             Next
                         </a>
                     @endif

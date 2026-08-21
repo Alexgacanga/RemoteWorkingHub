@@ -2,36 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Payment;
+use App\Services\InvoiceService;
 use App\Services\PaymentService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     public function __construct(
         protected PaymentService $paymentService,
+        protected InvoiceService $invoiceService,
     )
     {}
     public function index()
     {
-        $payment = $this->paymentService->all();
-        return view('admin.payments', compact('payment'));
+        $payments = $this->paymentService->all();
+        return view('admin.payments', compact('payments'));
     }
 
-    public function recordCash()
+    public function createCashPayment(string $id)
     {
-
-        return view('payments.record-cash');
-    }
-    public function mpesaPrompt()
-    {
-
-        return view('payments.mpesa-prompt');
-    }
-    public function mpesaCode()
-    {
-
-        return view('payments.mpesa-code');
+        $invoice = Invoice::findOrFail($id);
+        return view('pages.add-cash-payment', compact('invoice'));
     }
 
     /**
@@ -45,9 +39,27 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function storeCash(Request $request, string $id)
+    {   $invoice = Invoice::findOrFail($id);
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0',
+        ]);
+        Payment::create([
+            ...$validated,
+            'payment_date' => Carbon::today(),
+            'fname' => $invoice->subscription->customer->fname,
+            'lname' => $invoice->subscription->customer->lname,
+            'invoice_id' => $invoice->id,
+            'user_id' => $invoice->subscription->user->id ?? null,
+            'customer_id' => $invoice->subscription->customer->id,
+            'phone_number' => null,    
+            'bill_reference' => $invoice->subscription->customer->payment_id,
+            'payment_method' => 'cash',
+            'transaction_id' => null,
+            'package_id' => $invoice->subscription->package->id,
+            ]);
+        $this->invoiceService->updateTotals($invoice);
+        return redirect()->route('payments.index')->with('success', 'Cash payment created successfully.');
     }
 
     /**
