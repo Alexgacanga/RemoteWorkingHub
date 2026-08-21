@@ -42,4 +42,16 @@ class CustomerService
         ]);
 
     }
+    public function update(Request $request, string $id){
+        $customer = $this->find($id);
+        $validated = $request->validate([
+            'fname' => 'required|string|max:255',
+            'lname' => 'string|max:255',
+            'email' => 'email',
+            'id_no' => 'string|nullable',
+            'phone_no' => 'string|nullable',
+            'status' => 'string'
+        ]);
+        $customer->update($validated);
+    }
 }

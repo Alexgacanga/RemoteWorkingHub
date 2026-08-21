@@ -1,6 +1,28 @@
 <x-main-layout>
     <div class="min-h-screen bg-white" style="font-family: 'Poppins', sans-serif;">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  xl:py-10 2xl:py-12">
+            @if (session('success'))
+            <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-r-lg shadow-sm flex items-center justify-between" role="alert">
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span class="font-medium text-sm">{{ session('success') }}</span>
+                </div>
+            </div>
+        @endif
+
+        <!-- Error Alert Banner (if an exception/error occurs) -->
+        @if (session('error'))
+            <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg shadow-sm flex items-center justify-between" role="alert">
+                <div class="flex items-center">
+                    <svg class="h-5 w-5 text-red-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span class="font-medium text-sm">{{ session('error') }}</span>
+                </div>
+            </div>
+        @endif
             <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Customers</h1>
@@ -106,15 +128,17 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right">
                                         <div
                                             class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:opacity-100">
-                                            <button
-                                                class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]"
-                                                title="Edit customer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </button>
+                                            <a href="{{ route('customers.edit', $customer->id) }}">
+                                                <button
+                                                    class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]"
+                                                    title="Edit customer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                </button>
+                                            </a>
                                             <!-- Subscribe Dropdown Wrapper -->
                                             <div class="relative group/dropdown">
                                                 <!-- Trigger Button -->

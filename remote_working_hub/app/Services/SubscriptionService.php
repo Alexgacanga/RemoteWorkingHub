@@ -70,7 +70,6 @@ class SubscriptionService
                 ]);
             }
             $exists = Subscription::where('customer_id', $data['customer_id'])
-            ->where('package_id', $data['package_id'])
             ->whereIn('status', ['active', 'pending'])
             ->exists();
 

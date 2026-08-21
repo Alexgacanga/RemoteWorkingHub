@@ -41,18 +41,24 @@ Route::middleware('auth')->group(function () {
 
     // PAYMENTS
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
-    Route::get('/payments/record-cash', [PaymentController::class, 'recordCash'])->name('payments.record-cash');
-    Route::get('/payments/mpesa-prompt', [PaymentController::class, 'mpesaPrompt'])->name('payments.mpesa-prompt');
-    Route::get('/payments/mpesa-code', [PaymentController::class, 'mpesaCode'])->name('payments.mpesa-code');
+    Route::get('/payments/{id}/add-cash', [PaymentController::class, 'createCashPayment'])->name('cash-payments.create');
+    Route::post('/payments/{id}/add-cash', [PaymentController::class, 'storeCash'])->name('cash-payments.store');
 
     // SUBSCRIPTIONS
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
     Route::get('/subscriptions/{id}/create-day-pass', [SubscriptionController::class, 'createDayPass'])->name('day-pass-subscriptions.create');
     Route::post('/subscriptions/create-day-pass/{customerId}', [SubscriptionController::class, 'storeDayPass'])->name('day-pass-subscriptions.store');
     Route::get('/subscriptions/{id}/create-weekly', [SubscriptionController::class, 'createWeekly'])->name('weekly-subscriptions.create');
-    Route::post('/subscriptions/create-weekly//{customerId}', [SubscriptionController::class, 'storeWeekly'])->name('weekly-subscriptions.store');
+    Route::post('/subscriptions/create-weekly/{customerId}', [SubscriptionController::class, 'storeWeekly'])->name('weekly-subscriptions.store');
     Route::get('/subscriptions/{id}/create-monthly', [SubscriptionController::class, 'createMonthly'])->name('monthly-subscriptions.create');
-    Route::post('/subscriptions/create-monthly//{customerId}', [SubscriptionController::class, 'storeMonthly'])->name('monthly-subscriptions.store');
+    Route::post('/subscriptions/create-monthly/{customerId}', [SubscriptionController::class, 'storeMonthly'])->name('monthly-subscriptions.store');
+    Route::get('/subscriptions/{id}/edit-day-pass', [SubscriptionController::class, 'editDayPass'])->name('day-pass-subscriptions.edit');
+    Route::patch('/subscriptions/update-day-pass/{customerId}', [SubscriptionController::class, 'updateDayPass'])->name('day-pass-subscriptions.update');
+    Route::get('/subscriptions/{id}/edit-weekly', [SubscriptionController::class, 'editWeekly'])->name('weekly-subscriptions.edit');
+    Route::patch('/subscriptions/updste-weekly/{customerId}', [SubscriptionController::class, 'updateWeekly'])->name('weekly-subscriptions.update');
+    Route::get('/subscriptions/{id}/edit-monthly', [SubscriptionController::class, 'editMonthly'])->name('monthly-subscriptions.edit');
+    Route::patch('/subscriptions/update-monthly/{customerId}', [SubscriptionController::class, 'updateMonthly'])->name('monthly-subscriptions.update');
+    Route::delete('/subscriptions/{id}/delete/', [SubscriptionController::class, 'destroy'])->name('subscriptions.destroy');
 
     // ROLES
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');

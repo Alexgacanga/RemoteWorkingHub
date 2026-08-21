@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Package;
-use App\Services\CustomerService;
+use App\Models\Subscription;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,6 @@ class SubscriptionController extends Controller
 {
     public function __construct(
         protected SubscriptionService $subscriptionService,
-        protected CustomerService $customerService,
     ) {}
     public function index()
     {
@@ -26,7 +25,6 @@ class SubscriptionController extends Controller
     public function createDayPass(string $id)
     {
         $customer = Customer::findOrFail($id);
-        $subscriptionPackages = Package::where('is_active', true)->whereIn('time_options', ['week', 'month'])->get();
         $packages = Package::where('is_active', true)->whereIn('time_options', ['day'])->get();
         return view('pages.add-subscription-day-pass', compact('customer', 'packages'));
     }
@@ -97,20 +95,33 @@ class SubscriptionController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function editDayPass(string $id)
+    {   $subscription = Subscription::findOrFail($id);
+        $packages = Package::where('is_active', true)->whereIn('time_options', ['day'])->get();
+        return view('pages.edit-subscription-day-pass', compact('subscription', 'packages'));
+    }
+    public function editWeekly(string $id)
+    {   $subscription = Subscription::findOrFail($id);
+        $packages = Package::where('is_active', true)->whereIn('time_options', ['week'])->get();
+        return view('pages.edit-subscription-weekly', compact('subscription', 'packages'));
+    }
+    public function editMonthly(string $id)
+    {   $subscription = Subscription::findOrFail($id);
+        $packages = Package::where('is_active', true)->whereIn('time_options', ['month'])->get();
+        return view('pages.edit-subscription-monthly', compact('subscription', 'packages'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function updateDayPass(Request $request, string $id)
     {
-        //
+
+    }
+    public function updateWeekly(Request $request, string $id)
+    {
+
+    }
+    public function updateMonthly(Request $request, string $id)
+    {
+
     }
 
     /**
@@ -118,6 +129,8 @@ class SubscriptionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $subscription = Subscription::findOrFail($id);
+        $subscription->delete();
+        return redirect()->route('subscriptions.index');
     }
 }

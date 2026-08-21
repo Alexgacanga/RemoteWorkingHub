@@ -6,13 +6,14 @@ use App\Models\Option;
 use App\Models\Package;
 use App\Models\Subscription;
 use App\Services\PackageService;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
 
 public function __construct(
-    protected PackageService $packageService
+    protected PackageService $packageService,
 )
 {}
     public function index(Request $request)
@@ -32,8 +33,8 @@ public function __construct(
         if ($request->filled('time_options')) {
         $query->where('time_options', $request->time_options);
     }
-
         $packages = $query->orderByRaw("CASE WHEN is_active = 1 THEN 0 ELSE 1 END")->latest()->paginate(4)->withQueryString();
+
         return view('admin.packages', [
             'packages' => $packages,
         ]);

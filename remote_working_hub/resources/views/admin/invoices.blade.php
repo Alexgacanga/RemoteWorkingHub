@@ -84,6 +84,7 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-4 py-4 text-xs font-bold text-[#000000] uppercase tracking-wider">Invoice No.</th>
+                                <th scope="col" class="px-4 py-4 text-xs font-bold text-[#000000] uppercase tracking-wider">Account Number</th>
                                 <th scope="col" class="px-4 py-4 text-xs font-bold text-[#000000] uppercase tracking-wider">First Name</th>
                                 <th scope="col" class="px-4 py-4 text-xs font-bold text-[#000000] uppercase tracking-wider">Last Name</th>
                                 <th scope="col" class="px-4 py-4 text-xs font-bold text-[#000000] uppercase tracking-wider">Email</th>
@@ -107,6 +108,7 @@
                             @foreach ($invoices as $invoice)
                             <tr class="transition-all duration-300 hover:bg-gray-50 group">
                                 <td class="px-4 py-4 text-sm font-bold text-[#000000]">{{ $invoice->invoice_number }}</td>
+                                <td class="px-4 py-4 text-sm font-bold text-[#000000]">{{ $invoice->subscription->customer->payment_id }}</td>
                                 <td class="px-4 py-4 text-sm font-medium text-gray-600">{{ $invoice->subscription->customer->fname }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-500">{{ $invoice->subscription->customer->lname }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-500">{{ $invoice->subscription->customer->email }}</td>
@@ -127,11 +129,13 @@
                                 <!-- Sticky Action Column -->
                                 <td class="px-4 py-4 text-right sticky right-0 bg-[#FFFFFF] group-hover:bg-gray-50 transition-colors z-10 border-l border-gray-100 shadow-[-4px_0_6px_-2px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-2">
-                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Pay cash">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                                            </svg>
-                                        </button>
+                                        <a href="{{ route('cash-payments.create', $invoice->id) }}">
+                                            <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Pay cash">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                                </svg>
+                                            </button>
+                                        </a>
                                         <button class="inline-flex items-center justify-center p-2 rounded-lg bg-gray-100 text-[#000000] transition-all duration-300 hover:bg-[#000000] hover:text-[#FFFFFF]" title="View Receipt">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
