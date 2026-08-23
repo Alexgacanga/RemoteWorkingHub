@@ -17,6 +17,7 @@ class PaymentService
 {
     public function __construct(
         protected ReceiptService $receiptService,
+        protected InvoiceService $invoiceService
     ) {
         //
     }
@@ -120,6 +121,9 @@ class PaymentService
     }
     public function processC2BPayment(array $callback): void
     {
+        if (Payment::where('transaction_id', $callback['transaction_id'])->exists()) {
+        return;
+    }
         DB::transaction(function () use ($callback) {
 
             // MATCHES THE CUSTOMER ID WITH THE BILL REFERENCE
@@ -130,39 +134,26 @@ class PaymentService
             if(! $customer){
                 throw new Exception('Customer not found');
             }
-            // GETS AMOUNT PAID
-            $total_amount_paid = (float) $callback['transaction_amount'];
             // GETS INVOICES MATCHING THE GOTTEN CUSTOMER ID AND HAVE STATUS PENDING OR PARTIALLY PAID. GETS THE LATEST INVOICE
-            $invoices = Invoice::query()
+            $invoice = Invoice::query()
                 ->where('customer_id', $customer->id)
                 ->whereIn('status', [
-                    'PENDING',
-                    'PARTIALLY_PAID'
+                    'pending',
+                    'partially_paid'
                 ])
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'asc')
                 ->lockForUpdate()
-                ->get();
-            if($invoices->isEmpty()){
-                return;
-            }
-            foreach ($invoices as $invoice) {
-                //BREAKS THE ITERATION IF NO ACTUAL PAYMENT IS MADE
-                if ($total_amount_paid <= 0) {
-                    break;
-                }
-                //
-                if (
-                    Payment::where('transaction_id', $callback['transaction_id'])->exists()
-                ){
-                    return;
-                }
-                // GETS THE MINIMUM AMOUNT BETWEEN THE RECEIVED AMOUNT AND THE LISTED BALANCE ON THE INVOICE
-                $allocation = min(
-                    $total_amount_paid,
-                    $invoice->balance
-                );
-                // OBJECT CREATION AND ASSIGNING OF DATA
-                return Payment::create([
+                ->first();
+            if (! $invoice) {
+            $invoice = Invoice::query()
+                ->where('customer_id', $customer->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            if (! $invoice) return; // Exit if the customer has absolutely zero invoices
+        }
+
+                Payment::create([
                     'customer_id' => $customer->id,
                     'invoice_id' => $invoice->id,
                     'package_id' => $invoice->subscription->package_id,
@@ -176,14 +167,11 @@ class PaymentService
                     'bill_reference' => $callback['bill_reference'],
                     'user_id' => $invoice->subscription->customer->id ?? null
                 ]);
-
-                // CALCULATES ANY EXTRA AMOUNT PAID WHERE IF THE BALANCE WAS FULLY SETTLES FOR THE CURRENT INVOICE IT BECOMES ZERO
-                $extra_amount_paid = $total_amount_paid - $allocation;
+                $this->invoiceService->updateTotals($invoice);
 
                 // $receipt = new Receipt();
                 // $this->receiptService
                 //     ->generate($receipt, $payment);
-            }
         });
     }
 }

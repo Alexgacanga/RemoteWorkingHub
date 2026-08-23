@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('transaction_id')->unique();
-            $table->string('bill_reference')->unique();
+            $table->string('bill_reference');
             $table->date('transaction_time');
             $table->decimal('transaction_amount', 10, 2);
             $table->string('phone_number');

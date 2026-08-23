@@ -70,6 +70,7 @@ class SubscriptionService
                 ]);
             }
             $exists = Subscription::where('customer_id', $data['customer_id'])
+            ->where('package_id', $data['package_id'])
             ->whereIn('status', ['active', 'pending'])
             ->exists();
 
@@ -109,5 +110,14 @@ class SubscriptionService
             ]);
         }
         $subscription->update(['status' => 'pending']);
+    }
+    public function deleteSubscription(string $id): void{
+        $subscription = Subscription::findOrFail($id);
+        if ($subscription->invoice->whereIn('status', ['partially_paid', 'overdue', 'paid'])->exists()){
+            throw ValidationException::withMessages([
+                'subscription' => 'Cannot delete a subscription with associated invoices.'
+            ]);
+        }
+        $subscription->delete();
     }
 }

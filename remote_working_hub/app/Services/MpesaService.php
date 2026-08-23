@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Customer;
 use App\Models\MpesaCallbackLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http as Http;
 
 class MpesaService
@@ -60,6 +61,7 @@ class MpesaService
         return $this->parseConfirmation($request);
     }
     public function logCallback(array $callback): MpesaCallbackLog{
+        return DB::transaction(function () use($callback){
         return MpesaCallbackLog::create([
             'transaction_id' => $callback['transaction_id'],
             'bill_reference' => $callback['bill_reference'],
@@ -71,5 +73,6 @@ class MpesaService
             'status' => 'RECEIVED',
             'payload' => json_encode($callback),
         ]);
+    });
     }
 }

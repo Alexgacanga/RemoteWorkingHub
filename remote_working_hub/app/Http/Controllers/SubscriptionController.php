@@ -128,9 +128,7 @@ class SubscriptionController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        $subscription = Subscription::findOrFail($id);
-        $subscription->delete();
+    {   $this->subscriptionService->deleteSubscription($id);
         return redirect()->route('subscriptions.index');
     }
 }
