@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Models\MpesaCallbackLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,16 +36,18 @@ class MpesaService
     public function validate(Request $request): array{
         $paymentId = $request->input('BillRefNumber');
         $customer = Customer::where('payment_id', $paymentId)->first();
-        if(! $customer){
+        if($customer && Invoice::where('customer_id', $customer->id)->whereIn('status', ['pending', 'partially_paid'])->exists()){
+            return([
+                'ResultCode' => '0',
+                'ResultDesc' => 'Accepted'
+        ]);
+        }
+        else{
             return([
                 'ResultCode' => '1',
                 'ResultDesc' => 'Invalid account number'
             ]);
         }
-        return([
-            'ResultCode' => '0',
-            'ResultDesc' => 'Accepted'
-        ]);
     }
     public function parseConfirmation(Request $request): array{
         return([
