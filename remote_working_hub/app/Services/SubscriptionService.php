@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Models\Option;
 use App\Models\Package;
 use App\Models\Subscription;
@@ -95,6 +96,32 @@ class SubscriptionService
             return $subscription;
         });
     }
+    public function updateStatus(Invoice $invoice): void{
+        if($invoice->status === ['paid', 'partially paid', 'overdue'] && $invoice->subscription->end_date >= Carbon::now()){
+            $invoice->subscription->update([
+                'status' => 'active'
+            ]);
+            return;
+        }
+        if($invoice->subscription->end_date < Carbon::now() && $invoice->status === ['paid', 'overdue']){
+            $invoice->subscription->update([
+                'status' => 'expired'
+            ]);
+            return;
+        }
+        if($invoice->status === ['pending','partially paid'] && $invoice->subscription->end_date < Carbon::now()){
+            $invoice->subscription->update([
+                'status' => 'expired unpaid'
+            ]);
+            return;
+        }
+        if($invoice->status === ['pending'] && $invoice->subscription->end_date >= Carbon::now()){
+            $invoice->subscription->update([
+                'status' => 'active unpaid'
+            ]);
+            return;
+        }
+    }
     public function cancelSubscription(Subscription $subscription): void{
         if ($subscription->status === 'active'){
             throw ValidationException::withMessages([
@@ -113,7 +140,7 @@ class SubscriptionService
     }
     public function deleteSubscription(string $id): void{
         $subscription = Subscription::findOrFail($id);
-        if ($subscription->invoice->whereIn('status', ['partially_paid', 'overdue', 'paid'])->exists()){
+        if ($subscription->invoice->whereIn('status', ['partially paid', 'overdue', 'paid'])->exists()){
             throw ValidationException::withMessages([
                 'subscription' => 'Cannot delete a subscription with associated invoices.'
             ]);

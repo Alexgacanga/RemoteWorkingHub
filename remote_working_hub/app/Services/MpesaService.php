@@ -36,7 +36,7 @@ class MpesaService
     public function validate(Request $request): array{
         $paymentId = $request->input('BillRefNumber');
         $customer = Customer::where('payment_id', $paymentId)->first();
-        if($customer && Invoice::where('customer_id', $customer->id)->whereIn('status', ['pending', 'partially_paid'])->exists()){
+        if($customer && Invoice::where('customer_id', $customer->id)->whereIn('status', ['pending', 'partially paid'])->exists()){
             return([
                 'ResultCode' => '0',
                 'ResultDesc' => 'Accepted'

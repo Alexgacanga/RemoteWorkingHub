@@ -78,7 +78,7 @@ class InvoiceService
         }
     }
     public function cancelInvoice(Invoice $invoice): void{
-        if ($invoice->status === ['overdue', 'partially_paid', 'paid']){
+        if ($invoice->status === ['overdue', 'partially paid', 'paid']){
             throw ValidationException::withMessages([
                 'invoice' => 'Cannot cancel this invoice!'
             ]);
@@ -120,7 +120,7 @@ class InvoiceService
         }
         if($balance > 0 && $balance < $total){
             $invoice->update([
-                'status' => 'partially_paid'
+                'status' => 'partially paid'
             ]);
             return;
         }

@@ -17,7 +17,8 @@ class PaymentService
 {
     public function __construct(
         protected ReceiptService $receiptService,
-        protected InvoiceService $invoiceService
+        protected InvoiceService $invoiceService,
+        protected SubscriptionService $subscriptionService
     ) {
         //
     }
@@ -139,7 +140,7 @@ class PaymentService
                 ->where('customer_id', $customer->id)
                 ->whereIn('status', [
                     'pending',
-                    'partially_paid'
+                    'partially paid'
                 ])
                 ->orderBy('created_at', 'asc')
                 ->lockForUpdate()
@@ -168,6 +169,7 @@ class PaymentService
                     'user_id' => $invoice->subscription->customer->id ?? null
                 ]);
                 $this->invoiceService->updateTotals($invoice);
+                $this->subscriptionService->updateStatus($invoice);
 
                 // $receipt = new Receipt();
                 // $this->receiptService

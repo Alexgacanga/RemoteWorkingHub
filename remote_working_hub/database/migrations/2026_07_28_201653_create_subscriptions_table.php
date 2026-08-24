@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('no_of_days')->nullable();
-            $table->enum('status', ['pending', 'active', 'expired', 'cancelled'])->default('pending');
+            $table->enum('status', ['active unpaid', 'expired unpaid', 'active', 'expired', 'cancelled'])->default('active unpaid');
         });
     }
 
