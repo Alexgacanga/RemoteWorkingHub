@@ -6,14 +6,17 @@ use App\Models\Invoice;
 use App\Models\Payment;
 use App\Services\InvoiceService;
 use App\Services\PaymentService;
+use App\Services\SubscriptionService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
     public function __construct(
         protected PaymentService $paymentService,
         protected InvoiceService $invoiceService,
+        protected SubscriptionService $subscriptionService
     )
     {}
     public function index()
@@ -40,7 +43,9 @@ class PaymentController extends Controller
      * Store a newly created resource in storage.
      */
     public function storeCash(Request $request, string $id)
-    {   $invoice = Invoice::findOrFail($id);
+    {
+        DB::transaction(function () use ($request, $id) {
+        $invoice = Invoice::findOrFail($id);
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0',
         ]);
@@ -52,16 +57,19 @@ class PaymentController extends Controller
             'invoice_id' => $invoice->id,
             'user_id' => $invoice->subscription->user->id ?? null,
             'customer_id' => $invoice->subscription->customer->id,
-            'phone_number' => null,    
+            'phone_number' => null,
             'bill_reference' => $invoice->subscription->customer->payment_id,
             'payment_method' => 'cash',
             'transaction_id' => null,
             'package_id' => $invoice->subscription->package->id,
             ]);
         $this->invoiceService->updateTotals($invoice);
-        return redirect()->route('payments.index')->with('success', 'Cash payment created successfully.');
-    }
+        $this->subscriptionService->updateStatus($invoice);
 
+    });
+        return redirect()->route('payments.index')->with('success', 'Cash payment created successfully.');
+
+    }
     /**
      * Display the specified resource.
      */

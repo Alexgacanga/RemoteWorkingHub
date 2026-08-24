@@ -7,9 +7,9 @@ use App\Models\Invoice;
 use App\Models\Option;
 use App\Models\Package;
 use App\Models\Subscription;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -90,38 +90,45 @@ class SubscriptionService
                 'start_date' => $start,
                 'end_date' => $end,
                 'no_of_days' => $no_of_days,
-                'status' => 'pending',
+                'status' => 'active unpaid',
             ]);
             $this->invoiceService->createInvoice($subscription);
             return $subscription;
         });
     }
-    public function updateStatus(Invoice $invoice): void{
-        if($invoice->status === ['paid', 'partially paid', 'overdue'] && $invoice->subscription->end_date >= Carbon::now()){
-            $invoice->subscription->update([
-                'status' => 'active'
-            ]);
-            return;
-        }
-        if($invoice->subscription->end_date < Carbon::now() && $invoice->status === ['paid', 'overdue']){
-            $invoice->subscription->update([
-                'status' => 'expired'
-            ]);
-            return;
-        }
-        if($invoice->status === ['pending','partially paid'] && $invoice->subscription->end_date < Carbon::now()){
-            $invoice->subscription->update([
-                'status' => 'expired unpaid'
-            ]);
-            return;
-        }
-        if($invoice->status === ['pending'] && $invoice->subscription->end_date >= Carbon::now()){
-            $invoice->subscription->update([
-                'status' => 'active unpaid'
-            ]);
-            return;
-        }
+
+public function updateStatus(Invoice $invoice): void
+{
+    $expired = $invoice->subscription->end_date->lte(Carbon::now());
+
+    // Subscription is active if invoice is paid and subscription hasn't expired
+    if (in_array($invoice->status, ['paid', 'partially paid', 'overdue']) && !$expired) {
+        $invoice->subscription->update([
+            'status' => 'active',
+        ]);
     }
+
+    // Subscription has expired but invoice was paid
+    if (in_array($invoice->status, ['paid', 'overdue']) && $expired) {
+        $invoice->subscription->update([
+            'status' => 'expired',
+        ]);
+    }
+
+    // Subscription has expired and invoice is not fully paid
+    if (in_array($invoice->status, ['pending', 'partially paid']) && $expired) {
+        $invoice->subscription->update([
+            'status' => 'expired unpaid',
+        ]);
+    }
+
+    // Subscription is still active but invoice is pending
+    if ($invoice->status === 'pending' && !$expired) {
+        $invoice->subscription->update([
+            'status' => 'active unpaid',
+        ]);
+    }
+}
     public function cancelSubscription(Subscription $subscription): void{
         if ($subscription->status === 'active'){
             throw ValidationException::withMessages([

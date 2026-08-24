@@ -102,6 +102,9 @@ class InvoiceService
     public function updateTotals(Invoice $invoice): Invoice{
         $paid = $invoice->payments()->sum('amount');
         $balance = $invoice->total_amount - $paid;
+        if($invoice->balance_amount < 0){
+            $balance += $invoice->balance_amount;
+        }
         $total = $invoice->total_amount;
         $invoice->update([
             'paid_amount' => $paid,

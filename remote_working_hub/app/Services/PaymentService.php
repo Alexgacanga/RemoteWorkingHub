@@ -27,7 +27,6 @@ class PaymentService
         return Payment::query()
             ->with([
                 'customer',
-                'user',
                 'invoice'
             ])
             ->latest()
@@ -166,7 +165,6 @@ class PaymentService
                     'lname' => $callback['lname'],
                     'payment_date' => now(),
                     'bill_reference' => $callback['bill_reference'],
-                    'user_id' => $invoice->subscription->customer->id ?? null
                 ]);
                 $this->invoiceService->updateTotals($invoice);
                 $this->subscriptionService->updateStatus($invoice);
