@@ -12,10 +12,9 @@ use Illuminate\Http\Request;
 class PackageController extends Controller
 {
 
-public function __construct(
-    protected PackageService $packageService,
-)
-{}
+    public function __construct(
+        protected PackageService $packageService,
+    ) {}
     public function index(Request $request)
     {
         $query = Package::query();
@@ -31,15 +30,23 @@ public function __construct(
         }
 
         if ($request->filled('time_options')) {
-        $query->where('time_options', $request->time_options);
-    }
-        $packages = $query->orderByRaw("CASE WHEN is_active = 1 THEN 0 ELSE 1 END")->latest()->paginate(4)->withQueryString();
-
+            $query->where('time_options', $request->time_options);
+        }
+        $packages = $query
+            ->withCount([
+                'subscriptions as active_users_count' => function ($q) {
+                    $q->whereIn('status', ['active', 'active unpaid']);
+                }
+            ])
+            ->orderByRaw("CASE WHEN is_active = 1 THEN 0 ELSE 1 END")
+            ->latest()
+            ->paginate(4)
+            ->withQueryString();
         return view('admin.packages', [
-            'packages' => $packages,
+            'packages' => $packages
         ]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -73,7 +80,7 @@ public function __construct(
      */
     public function edit(string $id)
     {
-        $options= Option::where('is_active', true)->get();
+        $options = Option::where('is_active', true)->get();
         $package = $this->packageService->find($id);
         return view('pages.edit-package', compact('package', 'options'));
     }
