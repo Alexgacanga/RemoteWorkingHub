@@ -14,7 +14,7 @@ class MpesaController extends Controller
         protected PaymentService $paymentService
     )
     {}
-    public function validate(Request $request): JsonResponse{
+    public function validation(Request $request): JsonResponse{
         $response = $this->mpesaService->validate($request);
         return response()->json($response);
     }
@@ -31,6 +31,6 @@ class MpesaController extends Controller
         ]);
     }
     public function registerUrls(){
-
+        return $this->mpesaService->registerUrls();
     }
 }

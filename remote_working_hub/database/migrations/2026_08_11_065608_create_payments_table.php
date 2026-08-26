@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('lname');
             $table->foreignId('customer_id')->constrained()->onDelete('restrict');
             $table->foreignId('invoice_id')->constrained()->onDelete('restrict');
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('package_id')->constrained()->onDelete('restrict');
         });
     }

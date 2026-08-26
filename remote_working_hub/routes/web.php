@@ -16,11 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('pay')->group(function () {
-    Route::post('/confirmation', [MpesaController::class, 'comfirmation'])->name('pay.confirmation');
-    Route::post('/validation', [MpesaController::class, 'validation'])->name('pay.validation');
-    Route::get('/register', [MpesaController::class, 'registerUrls'])->name('pay.registerUrls');
-});
 
 Route::get('dashboard', function () {
     return view('dashboard');

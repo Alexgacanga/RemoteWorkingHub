@@ -16,6 +16,9 @@ class Subscription extends Model
         'no_of_days'
     ];
 
+    protected $casts = [
+    'end_date' => 'datetime',
+];
     public function customer(){
         return $this->belongsTo(Customer::class);
     }

@@ -17,6 +17,8 @@ class PaymentService
 {
     public function __construct(
         protected ReceiptService $receiptService,
+        protected InvoiceService $invoiceService,
+        protected SubscriptionService $subscriptionService
     ) {
         //
     }
@@ -25,7 +27,6 @@ class PaymentService
         return Payment::query()
             ->with([
                 'customer',
-                'user',
                 'invoice'
             ])
             ->latest()
@@ -120,6 +121,9 @@ class PaymentService
     }
     public function processC2BPayment(array $callback): void
     {
+        if (Payment::where('transaction_id', $callback['transaction_id'])->exists()) {
+        return;
+    }
         DB::transaction(function () use ($callback) {
 
             // MATCHES THE CUSTOMER ID WITH THE BILL REFERENCE
@@ -130,58 +134,44 @@ class PaymentService
             if(! $customer){
                 throw new Exception('Customer not found');
             }
-            // GETS AMOUNT PAID
-            $total_amount_paid = (float) $callback['amount'];
             // GETS INVOICES MATCHING THE GOTTEN CUSTOMER ID AND HAVE STATUS PENDING OR PARTIALLY PAID. GETS THE LATEST INVOICE
-            $invoices = Invoice::query()
+            $invoice = Invoice::query()
                 ->where('customer_id', $customer->id)
                 ->whereIn('status', [
-                    'PENDING',
-                    'PARTIALLY_PAID'
+                    'pending',
+                    'partially paid'
                 ])
-                ->orderBy('issued_at')
+                ->orderBy('created_at', 'asc')
                 ->lockForUpdate()
-                ->get();
-            if($invoices->isEmpty()){
-                return;
-            }
-            foreach ($invoices as $invoice) {
-                //BREAKS THE ITERATION IF NO ACTUAL PAYMENT IS MADE
-                if ($total_amount_paid <= 0) {
-                    break;
-                }
-                //
-                if (
-                    Payment::where('transaction_id', $callback['transaction_id'])->exists()
-                ){
-                    return;
-                }
-                // GETS THE MINIMUM AMOUNT BETWEEN THE RECEIVED AMOUNT AND THE LISTED BALANCE ON THE INVOICE
-                $allocation = min(
-                    $total_amount_paid,
-                    $invoice->balance
-                );
-                // OBJECT CREATION AND ASSIGNING OF DATA
-                $payment = new Payment();
+                ->first();
+            if (! $invoice) {
+            $invoice = Invoice::query()
+                ->where('customer_id', $customer->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
 
-                $payment->customer_id = $customer->id;
-                $payment->invoice_id = $invoice->id;
-                $payment->amount = $callback['transaction_amount'];
-                $payment->payment_method = 'MPESA';
-                $payment->transaction_id = $callback['transaction_id'];
-                $payment->phone_number = $callback['phone_number'];
-                $payment->fname = $callback['fname'];
-                $payment->lname = $callback['lname'];
-                $payment->paid_at = now();
+            if (! $invoice) return; // Exit if the customer has absolutely zero invoices
+        }
 
-                $payment->save();
-                // CALCULATES ANY EXTRA AMOUNT PAID WHERE IF THE BALANCE WAS FULLY SETTLES FOR THE CURRENT INVOICE IT BECOMES ZERO
-                $extra_amount_paid = $total_amount_paid - $allocation;
+                Payment::create([
+                    'customer_id' => $customer->id,
+                    'invoice_id' => $invoice->id,
+                    'package_id' => $invoice->subscription->package_id,
+                    'amount' => $callback['transaction_amount'],
+                    'payment_method' => 'MPESA',
+                    'transaction_id' => $callback['transaction_id'],
+                    'phone_number' => $callback['phone_number'],
+                    'fname' => $callback['fname'],
+                    'lname' => $callback['lname'],
+                    'payment_date' => now(),
+                    'bill_reference' => $callback['bill_reference'],
+                ]);
+                $this->invoiceService->updateTotals($invoice);
+                $this->subscriptionService->updateStatus($invoice);
 
-                $receipt = new Receipt();
-                $this->receiptService
-                    ->generate($receipt, $payment);
-            }
+                // $receipt = new Receipt();
+                // $this->receiptService
+                //     ->generate($receipt, $payment);
         });
     }
 }

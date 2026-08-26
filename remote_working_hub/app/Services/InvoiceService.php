@@ -36,17 +36,36 @@ class InvoiceService
     }
     public function createInvoice(Subscription $subscription): Invoice{
         $package = $subscription->package;
-        return Invoice::create([
+        $customer = $subscription->customer->findOrFail($subscription->customer_id);
+        $invoiceOverdue = Invoice::query()
+            ->where('customer_id', $customer->id)
+            ->whereIn('status', [
+                'overdue'
+                ])
+                ->orderBy('created_at', 'desc')
+                ->lockForUpdate()
+                ->first();
+        $paidAmount = 0;
+        if($invoiceOverdue){
+            $paidAmount = abs($invoiceOverdue->balance_amount);
+            $invoiceOverdue->update([
+                'balance_amount' => 0,
+                'status' => 'paid'
+            ]);
+        }
+        $balanceAmount = $package->price - $paidAmount;
+        $invoice = Invoice::create([
             'subscription_id' => $subscription->id,
             'customer_id' => $subscription->customer->id,
             'invoice_number' => $this->generateInvoiceNumber(),
             'total_amount' => $package->price,
-            'paid_amount' => 0,
-            'balance_amount' => $package->price,
+            'paid_amount' => $paidAmount,
+            'balance_amount' => $balanceAmount,
             'due_date' => $this->dueDate($subscription) ?? null,
             'status' => 'pending',
-
         ]);
+        $this->updateStatus($invoice, $balanceAmount, $package->price);
+        return $invoice->fresh();
     }
     public function dueDate(Subscription $subscription){
         if($subscription->package->time_options === 'month'){
@@ -59,7 +78,7 @@ class InvoiceService
         }
     }
     public function cancelInvoice(Invoice $invoice): void{
-        if ($invoice->status === ['overdue', 'partially_paid', 'paid']){
+        if ($invoice->status === ['overdue', 'partially paid', 'paid']){
             throw ValidationException::withMessages([
                 'invoice' => 'Cannot cancel this invoice!'
             ]);
@@ -83,6 +102,9 @@ class InvoiceService
     public function updateTotals(Invoice $invoice): Invoice{
         $paid = $invoice->payments()->sum('amount');
         $balance = $invoice->total_amount - $paid;
+        if($invoice->balance_amount < 0){
+            $balance += $invoice->balance_amount;
+        }
         $total = $invoice->total_amount;
         $invoice->update([
             'paid_amount' => $paid,
@@ -93,7 +115,7 @@ class InvoiceService
         return $invoice->fresh();
     }
     public function updateStatus(Invoice $invoice, float $balance, float $total): void{
-        if($balance == 0){
+        if($balance === 0){
             $invoice->update([
                 'status' => 'paid'
             ]);
@@ -101,7 +123,7 @@ class InvoiceService
         }
         if($balance > 0 && $balance < $total){
             $invoice->update([
-                'status' => 'partially_paid'
+                'status' => 'partially paid'
             ]);
             return;
         }
