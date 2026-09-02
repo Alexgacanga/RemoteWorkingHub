@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function create()
     {
-
+    return view('pages.add-user');
     }
     public function createIndex()
     {
@@ -33,7 +33,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        User::create($validated);
     }
 
     /**
