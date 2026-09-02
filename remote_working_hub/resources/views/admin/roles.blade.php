@@ -7,13 +7,15 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Roles & Permissions</h1>
 
-                <button type="button"
-                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-4 py-2.5 text-sm font-semibold text-[#FFFFFF] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FF6245] focus:ring-offset-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
-                    Add Role
-                </button>
+                <a href="{{ route('roles.create') }}">
+                    <button type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-4 py-2.5 text-sm font-semibold text-[#FFFFFF] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FF6245] focus:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Role
+                    </button>
+                </a>
             </div>
 
             <!-- Controls / Toolbar Section -->

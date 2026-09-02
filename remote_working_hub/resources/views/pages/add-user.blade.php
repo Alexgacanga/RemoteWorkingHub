@@ -53,7 +53,7 @@
                         <label for="name" class="block text-sm font-semibold text-[#000000] mb-2">
                             Full Name
                         </label>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" required
+                        <input type="text" id="name" name="name" required
                             class="w-full px-4 py-3 bg-[#FFFFFF] border border-gray-300 rounded-lg text-[#000000] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4FC1FF] focus:border-transparent transition-all duration-300 shadow-sm"
                             placeholder="e.g. Jane Doe">
                     </div>
@@ -63,7 +63,7 @@
                         <label for="email" class="block text-sm font-semibold text-[#000000] mb-2">
                             Email Address
                         </label>
-                        <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                        <input type="email" id="email" name="email" required
                             class="w-full px-4 py-3 bg-[#FFFFFF] border border-gray-300 rounded-lg text-[#000000] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4FC1FF] focus:border-transparent transition-all duration-300 shadow-sm"
                             placeholder="jane@example.com">
                     </div>
@@ -73,7 +73,7 @@
                         <label for="national_id" class="block text-sm font-semibold text-[#000000] mb-2">
                             National ID Number
                         </label>
-                        <input type="text" id="national_id" name="national_id" value="{{ old('national_id') }}" required
+                        <input type="text" id="national_id" name="id_no" required
                             class="w-full px-4 py-3 bg-[#FFFFFF] border border-gray-300 rounded-lg text-[#000000] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4FC1FF] focus:border-transparent transition-all duration-300 shadow-sm"
                             placeholder="e.g. 12345678">
                     </div>
@@ -83,7 +83,7 @@
                         <label for="phone" class="block text-sm font-semibold text-[#000000] mb-2">
                             Phone Number
                         </label>
-                        <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required
+                        <input type="tel" id="phone" name="phone_no" required
                             class="w-full px-4 py-3 bg-[#FFFFFF] border border-gray-300 rounded-lg text-[#000000] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4FC1FF] focus:border-transparent transition-all duration-300 shadow-sm"
                             placeholder="+254...">
                     </div>

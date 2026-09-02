@@ -12,8 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return view('admin.users', compact('user'));
+        $users = User::all();
+        return view('admin.users', compact('users'));
     }
 
     /**
@@ -23,10 +23,10 @@ class UserController extends Controller
     {
     return view('pages.add-user');
     }
-    public function createIndex()
-    {
-        return view('users.user-create');
-    }
+    // public function createIndex()
+    // {
+    //     return view('users.user-create');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -37,9 +37,12 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'id_no' => 'required|string|unique:users',
+            'phone_no' => 'required|string|max:20',
         ]);
 
         User::create($validated);
+        return redirect()->route('users.index');
     }
 
     /**
