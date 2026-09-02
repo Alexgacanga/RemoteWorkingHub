@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function create()
     {
-    return view('pages.add-user');
+        return view('pages.add-user');
     }
     // public function createIndex()
     // {

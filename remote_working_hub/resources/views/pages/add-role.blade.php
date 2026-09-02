@@ -79,84 +79,43 @@
                         </div>
                     </div>
 
-                    <!-- Permissions Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                        <!-- Permission Group: User Management -->
-                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <h4 class="text-sm font-bold text-[#000000] mb-4 pb-2 border-b border-gray-200">User Management</h4>
-                            <div class="space-y-3">
-                                <label for="perm_view_users" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_view_users" name="permissions[]" value="view_users"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">View Users</span>
-                                </label>
-                                <label for="perm_create_users" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_create_users" name="permissions[]" value="create_users"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Create Users</span>
-                                </label>
-                                <label for="perm_edit_users" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_edit_users" name="permissions[]" value="edit_users"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Edit Users</span>
-                                </label>
-                                <label for="perm_delete_users" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_delete_users" name="permissions[]" value="delete_users"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Delete Users</span>
-                                </label>
-                            </div>
-                        </div>
+    @foreach($permissions as $category => $group)
+        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow duration-300">
 
-                        <!-- Permission Group: Package Management -->
-                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <h4 class="text-sm font-bold text-[#000000] mb-4 pb-2 border-b border-gray-200">Package Management</h4>
-                            <div class="space-y-3">
-                                <label for="perm_view_packages" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_view_packages" name="permissions[]" value="view_packages"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">View Packages</span>
-                                </label>
-                                <label for="perm_create_packages" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_create_packages" name="permissions[]" value="create_packages"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Create Packages</span>
-                                </label>
-                                <label for="perm_edit_packages" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_edit_packages" name="permissions[]" value="edit_packages"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Edit Packages</span>
-                                </label>
-                                <label for="perm_delete_packages" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_delete_packages" name="permissions[]" value="delete_packages"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Delete Packages</span>
-                                </label>
-                            </div>
-                        </div>
+            <h4 class="text-sm font-bold text-[#000000] mb-4 pb-2 border-b border-gray-200">
+                {{ $category }}
+            </h4>
 
-                        <!-- Permission Group: Subscriptions -->
-                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <h4 class="text-sm font-bold text-[#000000] mb-4 pb-2 border-b border-gray-200">Subscriptions</h4>
-                            <div class="space-y-3">
-                                <label for="perm_view_subscriptions" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_view_subscriptions" name="permissions[]" value="view_subscriptions"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">View Subscriptions</span>
-                                </label>
-                                <label for="perm_create_subscriptions" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_create_subscriptions" name="permissions[]" value="create_subscriptions"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Create Subscriptions</span>
-                                </label>
-                                <label for="perm_cancel_subscriptions" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_cancel_subscriptions" name="permissions[]" value="cancel_subscriptions"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Cancel Subscriptions</span>
-                                </label>
-                            </div>
-                        </div>
+            <div class="space-y-3">
+
+                @foreach($group as $permission)
+                    <label
+                        for="permission_{{ $permission->id }}"
+                        class="flex items-center gap-3 cursor-pointer group">
+
+                        <input
+                            type="checkbox"
+                            id="permission_{{ $permission->id }}"
+                            name="permissions[]"
+                            value="{{ $permission->id }}"
+                            {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }}
+                            class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 accent-[#FF6245]">
+
+                        <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000]">
+                            {{ $permission->name }}
+                        </span>
+
+                    </label>
+                @endforeach
+
+            </div>
+
+        </div>
+    @endforeach
+
+</div>
 
                         <!-- Permission Group: Financials & Invoices -->
                         <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow duration-300">

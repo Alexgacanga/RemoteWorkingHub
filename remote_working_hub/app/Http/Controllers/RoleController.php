@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('pages.add-role');
+        $permissions = Permission::orderBy('name')
+            ->get()
+            ->groupBy('category');
+        return view('pages.add-role', compact('permissions'));
     }
 
     /**

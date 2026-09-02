@@ -17,32 +17,44 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('category');
         });
         DB::table('permissions')->insert([
-            ['name' => 'Create Users', 'slug' => 'create-users'],
-            ['name' => 'Edit Users', 'slug' => 'edit-users'],
-            ['name' => 'Delete Users', 'slug' => 'delete-users'],
-            ['name' => 'View Users', 'slug' => 'view-users'],
-            ['name' => 'Create Roles', 'slug' => 'create-roles'],
-            ['name' => 'Edit Roles', 'slug' => 'edit-roles'],
-            ['name' => 'Delete Roles', 'slug' => 'delete-roles'],
-            ['name' => 'View Roles', 'slug' => 'view-roles'],
-            ['name' => 'Create Packages', 'slug' => 'create-packages'],
-            ['name' => 'Edit Packages', 'slug' => 'edit-packages'],
-            ['name' => 'Delete Packages', 'slug' => 'delete-packages'],
-            ['name' => 'View Packages', 'slug' => 'view-packages'],
-            ['name' => 'Create Options', 'slug' => 'create-options'],
-            ['name' => 'Edit Options', 'slug' => 'edit-options'],
-            ['name' => 'View Options', 'slug' => 'view-options'],
-            ['name' => 'Delete Options', 'slug' => 'delete-options'],
-            ['name' => 'Manage Payments', 'slug' => 'payments'],
-            ['name' => 'Manage Subscriptions', 'slug' => 'subscriptions'],
-            ['name' => 'Manage Invoices', 'slug' => 'invoices'],
-            ['name' => 'Manage Sales', 'slug' => 'sales'],
-            ['name' => 'Manage Revenue', 'slug' => 'revenue'],
-            ['name' => 'Manage Customers', 'slug' => 'customers'],
-            ['name' => 'Manage Expenses', 'slug' => 'expenses'],
-            ['name' => 'Manage Receipts', 'slug' => 'receipts']
+            ['name' => 'Create Users', 'slug' => 'create-users', 'category' => 'Users'],
+            ['name' => 'Edit Users', 'slug' => 'edit-users', 'category' => 'Users'],
+            ['name' => 'Delete Users', 'slug' => 'delete-users', 'category' => 'Users'],
+            ['name' => 'View Users', 'slug' => 'view-users', 'category' => 'Users'],
+
+            ['name' => 'Create Roles', 'slug' => 'create-roles', 'category' => 'Roles'],
+            ['name' => 'Edit Roles', 'slug' => 'edit-roles', 'category' => 'Roles'],
+            ['name' => 'Delete Roles', 'slug' => 'delete-roles', 'category' => 'Roles'],
+            ['name' => 'View Roles', 'slug' => 'view-roles', 'category' => 'Roles'],
+
+            ['name' => 'Create Packages', 'slug' => 'create-packages', 'category' => 'Packages'],
+            ['name' => 'Edit Packages', 'slug' => 'edit-packages', 'category' => 'Packages'],
+            ['name' => 'Delete Packages', 'slug' => 'delete-packages', 'category' => 'Packages'],
+            ['name' => 'View Packages', 'slug' => 'view-packages', 'category' => 'Packages'],
+
+            ['name' => 'Create Options', 'slug' => 'create-options', 'category' => 'Options'],
+            ['name' => 'Edit Options', 'slug' => 'edit-options', 'category' => 'Options'],
+            ['name' => 'View Options', 'slug' => 'view-options', 'category' => 'Options'],
+            ['name' => 'Delete Options', 'slug' => 'delete-options', 'category' => 'Options'],
+
+            ['name' => 'Manage Payments', 'slug' => 'payments', 'category' => 'Payments'],
+
+            ['name' => 'Manage Subscriptions', 'slug' => 'subscriptions', 'category' => 'Subscriptions'],
+
+            ['name' => 'Manage Invoices', 'slug' => 'invoices', 'category' => 'Invoices'],
+
+            ['name' => 'Manage Sales', 'slug' => 'sales', 'category' => 'Sales'],
+
+            ['name' => 'Manage Revenue', 'slug' => 'revenue', 'category' => 'Revenue'],
+
+            ['name' => 'Manage Customers', 'slug' => 'customers', 'category' => 'Customers'],
+
+            ['name' => 'Manage Expenses', 'slug' => 'expenses', 'category' => 'Expenses'],
+            
+            ['name' => 'Manage Receipts', 'slug' => 'receipts', 'category' => 'Receipts']
         ]);
     }
 
