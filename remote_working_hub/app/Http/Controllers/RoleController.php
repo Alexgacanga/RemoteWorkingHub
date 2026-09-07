@@ -33,7 +33,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:roles,name',
+            'description' => 'nullable|string',
+            'permissions' => 'array|exists:permissions,id'
+        ]);
+
+        $role = Role::create([$validated]);
+        $role->permissions()->attach($validated['permissions']);
+        return redirect()->route('roles.index')
+            ->with('success', 'Role created successfully.');
     }
 
     /**

@@ -116,26 +116,7 @@
     @endforeach
 
 </div>
-
-                        <!-- Permission Group: Financials & Invoices -->
-                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <h4 class="text-sm font-bold text-[#000000] mb-4 pb-2 border-b border-gray-200">Financials & Invoicing</h4>
-                            <div class="space-y-3">
-                                <label for="perm_view_invoices" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_view_invoices" name="permissions[]" value="view_invoices"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">View Invoices</span>
-                                </label>
-                                <label for="perm_process_payments" class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" id="perm_process_payments" name="permissions[]" value="process_payments"
-                                        class="w-5 h-5 rounded border-gray-300 text-[#FF6245] focus:ring-2 focus:ring-[#4FC1FF] focus:ring-offset-1 transition-all duration-300 cursor-pointer accent-[#FF6245]">
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-[#000000] transition-colors duration-300">Process Payments</span>
-                                </label>
-                            </div>
-                        </div>
-
                     </div>
-                </div>
 
                 <!-- Submit Area (Footer) -->
                 <div class="pt-6 mt-10 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-end gap-4">
