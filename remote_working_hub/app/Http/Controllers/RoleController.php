@@ -36,10 +36,10 @@ class RoleController extends Controller
         $validated = $request->validate([
             'name' => 'required|unique:roles,name',
             'description' => 'nullable|string',
-            'permissions' => 'array|exists:permissions,id'
+            'permissions' => 'required|array',
         ]);
 
-        $role = Role::create([$validated]);
+        $role = Role::create($validated);
         $role->permissions()->attach($validated['permissions']);
         return redirect()->route('roles.index')
             ->with('success', 'Role created successfully.');
