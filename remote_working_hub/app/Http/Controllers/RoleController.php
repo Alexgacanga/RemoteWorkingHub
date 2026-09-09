@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -12,8 +13,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $payment = Role::all();
-        return view('admin.roles', compact('payment'));
+        $roles = Role::all();
+        return view('admin.roles', compact('roles'));
     }
 
     /**
@@ -21,7 +22,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::orderBy('name')
+            ->get()
+            ->groupBy('category');
+        return view('pages.add-role', compact('permissions'));
     }
 
     /**
@@ -29,7 +33,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:roles,name',
+            'description' => 'nullable|string',
+            'permissions' => 'required|array',
+        ]);
+
+        $role = Role::create($validated);
+        $role->permissions()->attach($validated['permissions']);
+        return redirect()->route('roles.index')
+            ->with('success', 'Role created successfully.');
     }
 
     /**

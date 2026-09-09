@@ -7,13 +7,15 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Roles & Permissions</h1>
 
-                <button type="button"
-                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-4 py-2.5 text-sm font-semibold text-[#FFFFFF] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FF6245] focus:ring-offset-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
-                    Add Role
-                </button>
+                <a href="{{ route('roles.create') }}">
+                    <button type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-4 py-2.5 text-sm font-semibold text-[#FFFFFF] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FF6245] focus:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Role
+                    </button>
+                </a>
             </div>
 
             <!-- Controls / Toolbar Section -->
@@ -34,15 +36,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <!-- Role Card -->
+                @foreach($roles as $role)
                 <div class="flex flex-col bg-[#FFFFFF] rounded-2xl shadow-md border border-gray-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group">
-                    <h3 class="text-xl font-bold text-[#000000] mb-2">Marketing Specialist</h3>
-                    <p class="text-sm text-gray-500 mb-5 flex-grow">Responsible for managing promotional packages and tracking revenue metrics for campaigns.</p>
+                    <h3 class="text-xl font-bold text-[#000000] mb-2">{{ $role->name }}</h3>
+                    <p class="text-sm text-gray-500 mb-5 flex-grow">{{ $role->description }}</p>
 
                     <!-- Permissions -->
                     <div class="mb-5 flex-grow">
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#4FC1FF]/15 text-[#000000]">Packages</span>
-                            <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#4FC1FF]/15 text-[#000000]">Revenue</span>
+                            <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#4FC1FF]/15 text-[#000000]">{{ $role->permissions->pluck('name')->join('. ') }}</span>
                         </div>
                     </div>
 
@@ -68,6 +70,7 @@
                         </button>
                     </div>
                 </div>
+                @endforeach
             </div>
             <!-- Pagination Section -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200">

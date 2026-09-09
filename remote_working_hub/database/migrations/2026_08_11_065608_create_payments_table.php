@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('fname');
             $table->string('lname');
             $table->foreignId('customer_id')->constrained()->onDelete('restrict');
-            $table->foreignId('invoice_id')->constrained()->onDelete('restrict');
-            $table->foreignId('package_id')->constrained()->onDelete('restrict');
+            $table->foreignId('invoice_id')->nullable()->constrained()->onDelete('restrict');
+            $table->foreignId('package_id')->nullable()->constrained()->onDelete('restrict');
         });
     }
 

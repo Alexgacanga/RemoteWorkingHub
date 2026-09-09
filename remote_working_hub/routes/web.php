@@ -57,6 +57,11 @@ Route::middleware('auth')->group(function () {
 
     // ROLES
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::patch('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{id}/delete', [RoleController::class, 'destroy'])->name('roles.destroy');
 
     //INVOICES
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
@@ -80,7 +85,11 @@ Route::middleware('auth')->group(function () {
 
     // USERS
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/create', [UserController::class, 'createIndex'])->name('users.create');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}/delete', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -7,13 +7,15 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h1 class="text-xl font-bold tracking-tight text-black sm:text-2xl">Users</h1>
 
-                <button type="button"
-                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-6 py-3 text-sm font-semibold text-[#FFFFFF] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FF6245] focus:ring-offset-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                    </svg>
-                    Add New User
-                </button>
+                <a href="{{ route('users.create') }}">
+                    <button type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF6245] px-6 py-3 text-sm font-semibold text-[#FFFFFF] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FF6245] focus:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
+                        Add New User
+                    </button>
+                </a>
             </div>
 
             <!-- Controls / Toolbar Section -->
@@ -37,7 +39,6 @@
                         <thead class="bg-gray-50 text-left text-xs font-semibold uppercase tracking-[0.14em] text-gray-600">
                             <tr>
                                 <th scope="col" class="whitespace-nowrap px-6 py-4">First Name</th>
-                                <th scope="col" class="whitespace-nowrap px-6 py-4">Last Name</th>
                                 <th scope="col" class="whitespace-nowrap px-6 py-4">Email</th>
                                 <th scope="col" class="whitespace-nowrap px-6 py-4">Phone</th>
                                 <th scope="col" class="whitespace-nowrap px-6 py-4">ID Number</th>
@@ -46,14 +47,13 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 bg-[#FFFFFF]">
-
+                            @foreach ($users as $user)
                             <!-- User Row 1 -->
                             <tr class="transition-all duration-300 hover:bg-gray-50 group">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#000000]">Jane</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-600">Mwangi</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">jane.mwangi@example.com</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+254 712 345 678</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32145678</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#000000]">{{ $user->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-600">{{ $user->email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->phone_no }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->id_no }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full bg-[#4FC1FF]/15 text-[#000000] text-xs font-bold tracking-wide uppercase">
                                         Admin
@@ -61,19 +61,25 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right">
                                     <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:opacity-100">
-                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]" title="Edit User">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </button>
-                                        <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Delete User">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
+                                        <a href="">
+                                            <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#4FC1FF]/10 text-[#4FC1FF] transition-all duration-300 hover:bg-[#4FC1FF] hover:text-[#FFFFFF]" title="Edit User">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                            </button>
+                                        </a>
+                                        <a href="">
+                                            <button class="inline-flex items-center justify-center p-2 rounded-lg bg-[#FF6245]/10 text-[#FF6245] transition-all duration-300 hover:bg-[#FF6245] hover:text-[#FFFFFF]" title="Delete User">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
