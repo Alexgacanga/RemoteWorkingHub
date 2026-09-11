@@ -94,12 +94,14 @@
                             Assign Role
                         </label>
                         <div class="relative">
-                            <select id="role" name="role" required
-                                class="w-full px-4 py-3 bg-[#FFFFFF] border border-gray-300 rounded-lg text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#4FC1FF] focus:border-transparent transition-all duration-300 appearance-none cursor-pointer shadow-sm">
-                                <option value="" disabled selected>Select a role...</option>
-                                <option value="admin">Admin</option>
-                                <option value="manager">Manager</option>
-                                <option value="staff">Staff</option>
+                            <select
+                            name="roles[]"
+                            multiple
+                            required
+                            class="w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                                @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
                             </select>
 
                             <!-- Custom Dropdown Arrow -->
