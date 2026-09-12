@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,8 +21,8 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return view('pages.add-user');
+    {   $roles = Role::all();
+        return view('pages.add-user', compact('roles'));
     }
     // public function createIndex()
     // {
@@ -39,9 +40,12 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'id_no' => 'required|string|unique:users',
             'phone_no' => 'required|string|max:20',
+            'roles' => 'required|array'
         ]);
 
-        User::create($validated);
+        $user = User::create($validated);
+        $user->roles()->attach($validated['roles']);
+
         return redirect()->route('users.index');
     }
 
